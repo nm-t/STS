@@ -1,13 +1,14 @@
-[{
-    trueRate,
-    int pass,
-    [numSuccess],
-    stageFailed
-}]
+// [{
+//     trueRate,
+//     int pass,
+//     [numSuccess],
+//     stageFailed
+// }]
 
-[(cumulativeTrueRate, successRate)]
+// [(cumulativeTrueRate, successRate)]
 
-function(grid) {
+// Assumes input is in strictly ascending order by true success rate
+var ctrS = function(grid) {
     var outputPairs = [];
 
     var lastTrueRate = grid[0].trueRate;
@@ -25,4 +26,47 @@ function(grid) {
         successes += row.pass;
         totalTrials += 1;
     });
-}
+
+    outputPairs.push({ trueRate: lastTrueRate, successRate: successes / totalTrials })
+    return outputPairs;
+};
+
+var testData1 = [
+ { trueRate: 0.1,
+     pass: 1,
+     numSuccess: [1, 2, 3],
+     stageFailed: -1
+ },
+ { trueRate: 0.1,
+     pass: 1,
+     numSuccess: [1, 2, 3],
+     stageFailed: -1
+ },
+ { trueRate: 0.2,
+     pass: 0,
+     numSuccess: [1, 2, 3],
+     stageFailed: 2
+ },
+ { trueRate: 0.2,
+     pass: 1,
+     numSuccess: [1, 2, 3],
+     stageFailed: -1
+ },
+ { trueRate: 0.3,
+     pass: 0,
+     numSuccess: [1, 2, 3],
+     stageFailed: 1
+ },
+ { trueRate: 0.3,
+     pass: 1,
+     numSuccess: [1, 2, 3],
+     stageFailed: -1
+ },
+ { trueRate: 0.3,
+     pass: 1,
+     numSuccess: [1, 2, 3],
+     stageFailed: -1
+ }
+];
+
+console.log(ctr(testData1));
