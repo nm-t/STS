@@ -1,0 +1,14 @@
+stage {numPeople, passThreshold}
+
+runStage (stage, trueRate) => (bool pass, int numSuccess)
+
+runSeqTrial ([stage], trueRate) => (bool pass, [int numSuccess])
+
+createGrid ([stage], [(trueRate, numTrials)]) => [{trueRate, bool pass, [int numSuccess], int stageFailed}]
+
+plotSuccessRateForCumulativeTrueRate([{trueRate, bool pass, [int numSuccess], int stageFailed}]) => [(successRate, trueRate)]
+
+plotCumulativeTrueRateGivenSuccess
+
+plotCumulativeTrueRateGivenFailure
+
