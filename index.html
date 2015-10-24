@@ -21,7 +21,6 @@
 	<div class="jumbotron">
 		<h1>Sequential Trial Simulator</h1>
 		<p>A tool for simulating drug trials.</p>
-		<a href="splash.html">About</a>
 	</div>
 	
 	<div class="container-fluid">
@@ -47,82 +46,94 @@
 			<div class="col-sm-12" id="output">
 				<h2>Output graphs</h2>
 				<ul id="displayGraph" class="list-inline">
-	                <li class="graph"><svg id="trgraph" width="400" height="270"></svg></li>
+	                <li class="graph"><svg id="trgraph" width="350" height="330"></svg></li>
 
-	                <li class="graph"><svg id="visualisation" width="400" height="270"></svg></li>
+	                <li class="graph"><svg id="visualisation" width="350" height="330"></svg></li>
 
-	                <li class="graph"><svg id="trgivenfail" width="400" height="270"></svg></li>
+	                <li class="graph"><svg id="trgivenfail" width="350" height="330"></svg></li>
 				</ul>
-			 		<script>
 
+		 		<script>
+				var drawGraph = function (data, graphLocation, trGivenSType) {
+				    $(graphLocation).html(''); //#trgraph, #visualisation, #trgivenfail
+					var firstData = R.last(data);
+					var lastData = R.head(data);
+					var trueRate = R.prop('trueRate');
+					var trGivenS  = R.prop(trGivenSType); //passFraction, trGivenS, trGivenF
+					var firstTrueRate = trueRate(firstData);
+					var lastTrueRate = trueRate(lastData);
+					var firstTrGivenS = trGivenS(firstData);
+					var lastTrGivenS = trGivenS(lastData);
 
-var graphCustom = function (data, graphLocation, trGivenSType) {
-    $(graphLocation).html(''); //#trgraph, #visualisation, #trgivenfail
-						var firstData = R.last(data);
-						var lastData = R.head(data);
-						var trueRate = R.prop('trueRate');
-						var trGivenS  = R.prop(trGivenSType); //passFraction, trGivenS, trGivenF
-						var firstTrueRate = trueRate(firstData);
-						var lastTrueRate = trueRate(lastData);
-						var firstTrGivenS = trGivenS(firstData);
-						var lastTrGivenS = trGivenS(lastData);
+					var vis = d3.select(graphLocation),
+					    WIDTH = 350,
+					    HEIGHT = 330,
+					    MARGINS = {
+					        top: 20,
+					        right: 20,
+					        bottom: 50,
+					        left: 50
+					    },
 
-						var vis = d3.select(graphLocation),
-						    WIDTH = 400,
-						    HEIGHT = 270,
-						    MARGINS = {
-						        top: 20,
-						        right: 20,
-						        bottom: 20,
-						        left: 50
-						    },
+				    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([firstTrueRate,lastTrueRate]),
+				    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([lastTrGivenS, firstTrGivenS]),
 
-					    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([firstTrueRate,lastTrueRate]),
-					    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([lastTrGivenS, firstTrGivenS]),
+				    xAxis = d3.svg.axis()
+					    .scale(xScale),
+					  
+					yAxis = d3.svg.axis()
+					    .scale(yScale)
+		    			.orient("left");
 
-					    xAxis = d3.svg.axis()
-						    .scale(xScale),
-						  
-						yAxis = d3.svg.axis()
-						    .scale(yScale)
-			    			.orient("left");
+				    vis.append("svg:g")
+					    .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+					    .call(xAxis);
+				    vis.append("svg:g")
+					    .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+					    .call(yAxis);
 
-					    vis.append("svg:g")
-						    .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-						    .call(xAxis);
-					    vis.append("svg:g")
-						    .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-						    .call(yAxis);
+				    var lineGen = d3.svg.line()
+						.x(function(d) {
+						return xScale(d.trueRate);
+						})
+						.y(function(d) {
+						return yScale(d[trGivenSType]);
+						});
 
-					    var lineGen = d3.svg.line()
-							.x(function(d) {
-							return xScale(d.trueRate);
-							})
-							.y(function(d) {
-							return yScale(d[trGivenSType]);
-							});
+					vis.append('svg:path')
+					  .attr('d', lineGen(data));
 
-						vis.append('svg:path')
-						  .attr('d', lineGen(data));
+					// Graph title
+					vis.append('text')
+                        .attr('transform', 'translate(200, 20)')
+				        .attr('text-anchor', 'middle')
+				        .text(graphLocation);
 
-                        vis.append('text')
-                            .attr('transform', 'translate(200, 230)')
-                            .style('text-anchor', 'middle')
-                            .text(graphLocation);
+					// x axis label
+                    vis.append('text')
+                        .attr('transform', 'translate(200, 320)')
+                        .style('text-anchor', 'middle')
+                        .text('True efficacy/toxicity');
 
-						var lineGen = d3.svg.line()
-						    .x(function(d) {
-						        return xScale(d.year);
-						    })
-						    .y(function(d) {
-						        return yScale(d.sale);
-						    })
-						    .interpolate("basis");
-};
-			 		</script>
-			 		
-				<div class="col-sm-5" id="area2">
-				</div>
+                    // y axis label
+                    vis.append('text')
+					    .attr('dy', '1em')
+					    .attr('transform', 'rotate(-90)')
+                        .style('text-anchor', 'end')
+					    .text('Probability');
+
+					var lineGen = d3.svg.line()
+					    .x(function(d) {
+					    	// TODO: change var name
+					        return xScale(d.year);
+					    })
+					    .y(function(d) {
+					    	// TODO: change var name
+					        return yScale(d.sale);
+					    })
+					    .interpolate("basis");
+				};
+		 		</script>
 		</div>
 	</div>
 
