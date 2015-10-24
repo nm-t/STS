@@ -9,14 +9,11 @@
         var failed_stage = [];
         var passed_stage = [];
 
-        console.log('stages ' + stages);
-        console.log('rate ' + trueRate);
-
-        stages.forEach(function(stage) {
-            // Initialise
-            for (var index=previous_cutoff; index < passed_previous.length + stage.numPeople; index++) {
-                pass_current[index] = 0.0;
-            }
+		stages.forEach(function(stage) {
+			// Initialise
+			for (var index=previous_cutoff; index < passed_previous.length + stage.numPeople; index++) {
+				pass_current[index] = 0.0;
+			}
 
 
             for (var people=0; people <= stage.numPeople; people++) {
@@ -35,15 +32,16 @@
             failed_stage[failed_stage.length] = failed_at_stage;
             average_passed_stage = 0.;
 
-            for (var index=previous_cutoff; index < pass_current.length; index++) {
-                average_passed_stage += pass_current[index] * index
-            }
-            passed_stage[passed_stage.length] = average_passed_stage;
+			for (var index=0; index < pass_current.length; index++) {
+				average_passed_stage += pass_current[index] * index
+			}
+			passed_stage[passed_stage.length] = average_passed_stage;
 
-            previous_cutoff = stage.passThreshold;
-            passed_previous = pass_current;
-            pass_current = [];
-        });
+			previous_cutoff = stage.passThreshold;
+			passed_previous = pass_current;
+			pass_current = pass_current.slice(0, stage.passThreshold);
+		});
+
 
         var pass = 0.;
         for (var index=previous_cutoff; index < passed_previous.length; index++) {
@@ -75,6 +73,24 @@
         return results;
     };
 
-    //createGrid([{ 'numPeople' : 1, 'passThreshold' : 1}, {'numPeople' : 2, 'passThreshold' : 2}], [0.5]);
+	
+	createGrid([{ 'numPeople' : 1, 'passThreshold' : 1}, 
+		{'numPeople' : 1, 'passThreshold' : 2},
+		{'numPeople' : 1, 'passThreshold' : 3}], [0.5]);
+
+	createGrid([{ 'numPeople' : 2, 'passThreshold' : 1}, 
+		{'numPeople' : 2, 'passThreshold' : 2},
+		], [0.5]);
+	createGrid([{ 'numPeople' : 3, 'passThreshold' : 2}, 
+		{'numPeople' : 2, 'passThreshold' : 3},
+		{'numPeople' : 3, 'passThreshold' : 6},
+		], [0.5]);
+
+	createGrid([{ 'numPeople' : 1, 'passThreshold' : 1}, 
+		{'numPeople' : 1, 'passThreshold' : 2},
+		{'numPeople' : 1, 'passThreshold' : 3},
+		{'numPeople' : 1, 'passThreshold' : 4}], [0.5]);
+
+
 })();
 
