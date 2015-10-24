@@ -86,19 +86,10 @@ $( document ).ready(function() {
 				graphDataGivenTrue = ctrGivenS(grid);
 				var trGraphData = ctr(grid);
 				var trGivenFData = ctrGivenF(grid);
-				
-//#trgraph, #visualisation, #trgivenfail
-//passFraction, trGivenS, trGivenF
 
                 drawGraph(trGraphData, '#trgraph', 'passFraction');
 				drawGraph(graphDataGivenTrue, '#visualisation', 'trGivenS');
                 drawGraph(trGivenFData, '#trgivenfail', 'trGivenF');
-                //graphTrGivenS(graphDataGivenTrue);
-                //console.log(trGraphData);
-
-				//graphTr(trGraphData);
-				//graphTrGivenF(trGivenFData);
-			
     		}
             e.preventDefault();
     });
