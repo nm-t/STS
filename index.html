@@ -62,7 +62,7 @@
 	                <svg id="visualisation" width="400" height="270"></svg>
 
 			 		<script>
-						var data = ctrGivenS(grid, [1,1,1]);
+var graphTrGivenS = function (data) {
 						var firstData = R.last(data);
 						var lastData = R.head(data);
 						var trueRate = R.prop('trueRate');
@@ -118,6 +118,7 @@
 						        return yScale(d.sale);
 						    })
 						    .interpolate("basis");
+};
 			 		</script>
 			 		
 				<div class="col-sm-5" id="area2">
