@@ -58,10 +58,11 @@
 				<h2>Output graphs</h2>
 				<div class="col-sm-5" id="area1">
 	                <svg id="visualisation" width="400" height="270"></svg>
-	                <svg id="graphTr" width="400" height="270"></svg>
+	                <svg id="trgraph" width="400" height="270"></svg>
 
 			 		<script>
 var graphTr = function (data) {
+    $('#trgraph').html('');
 						var firstData = R.last(data);
 						var lastData = R.head(data);
 						var trueRate = R.prop('trueRate');
@@ -71,7 +72,7 @@ var graphTr = function (data) {
 						var firstTrGivenS = trGivenS(firstData);
 						var lastTrGivenS = trGivenS(lastData);
 
-						var vis = d3.select("#graphTr"),
+						var vis = d3.select("#trgraph"),
 						    WIDTH = 400,
 						    HEIGHT = 270,
 						    MARGINS = {
@@ -123,7 +124,9 @@ var graphTr = function (data) {
 						    })
 						    .interpolate("basis");
 };
+
 var graphTrGivenS = function (data) {
+    $('#visualisation').html('');
 						var firstData = R.last(data);
 						var lastData = R.head(data);
 						var trueRate = R.prop('trueRate');
