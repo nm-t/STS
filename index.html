@@ -119,26 +119,7 @@
 				<div class="col-sm-5" id="area1">
 			        <svg id="visualisation" width="400" height="270"></svg>
 			 		<script>
-			 			var data = [{
-						    "sale": "202",
-						    "year": "0.0"
-						}, {
-						    "sale": "215",
-						    "year": "0.1"
-						}, {
-						    "sale": "179",
-						    "year": "0.2"
-						}, {
-						    "sale": "199",
-						    "year": "0.3"
-						}, {
-						    "sale": "134",
-						    "year": "0.4"
-						}, {
-						    "sale": "176",
-						    "year": "0.5"
-						}];
-
+			 		var drawLineGraph = function(data) {
 						var vis = d3.select("#visualisation"),
 						    WIDTH = 400,
 						    HEIGHT = 270,
@@ -186,11 +167,34 @@
 						        return yScale(d.sale);
 						    })
 						    .interpolate("basis");
+						}
 			 		</script>
 				</div>
 
 				<div class="col-sm-5" id="area2">
 					<script>
+
+			 			var data = [{
+						    "sale": "202",
+						    "year": "0.0"
+						}, {
+						    "sale": "215",
+						    "year": "0.1"
+						}, {
+						    "sale": "179",
+						    "year": "0.2"
+						}, {
+						    "sale": "199",
+						    "year": "0.3"
+						}, {
+						    "sale": "134",
+						    "year": "0.4"
+						}, {
+						    "sale": "176",
+						    "year": "0.5"
+						}];
+
+						drawLineGraph(data);
 						//drawGraph("#area1", "data2.csv");
 						drawGraph("#area2", "data2.csv");
 					</script>
