@@ -11,14 +11,14 @@ $( document ).ready(function() {
     var addStage = function() {
         $("#addrule").remove();
         var newStage = "<li class='stage'><h4>Stage " + stageNum + "</h4>" +'<div class="form-group">\
-        <label class="col-xs-3 control-label">Number of people</label><div class="col-xs-5">\
+        <label class="col-xs-5 control-label">Number of people</label><div class="col-xs-4 form-number">\
                 <input type="number" class="form-control people"\
                     required\
                     data-fv-notempty-message="Number of people is required" />\
             </div>\
         </div>' + '<div class="form-group">\
-        <label class="col-xs-3 control-label">Threshold</label>\
-            <div class="col-xs-5">\
+        <label class="col-xs-5 control-label">Threshold</label>\
+            <div class="col-xs-4 form-number">\
                 <input type="number" class="form-control threshold"\
                     required\
                     data-fv-notempty-message="A threshhold is required, and must be at most the total number of people in the trial so far" />\
