@@ -58,10 +58,85 @@
 
 				<div class="col-sm-5" id="area1">
 			        <svg id="visualisation" width="400" height="270"></svg>
-				</div>
-    <script>
-    </script>
+			 		<script>
+			 		var drawLineGraph = function(data) {
+						var vis = d3.select("#visualisation"),
+						    WIDTH = 400,
+						    HEIGHT = 270,
+						    MARGINS = {
+						        top: 20,
+						        right: 20,
+						        bottom: 20,
+						        left: 50
+						    },
 
+					    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([0,1]),
+					    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([134,215]),
+
+					    xAxis = d3.svg.axis()
+						    .scale(xScale),
+						  
+						yAxis = d3.svg.axis()
+						    .scale(yScale)
+			    			.orient("left");
+
+					    vis.append("svg:g")
+						    .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+						    .call(xAxis);
+					    vis.append("svg:g")
+						    .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+						    .call(yAxis);
+
+					    var lineGen = d3.svg.line()
+							.x(function(d) {
+							return xScale(d.year);
+							})
+							.y(function(d) {
+							return yScale(d.sale);
+							});
+
+						vis.append('svg:path')
+						  .attr('d', lineGen(data))
+						  .attr('fill', 'none');
+
+						var lineGen = d3.svg.line()
+						    .x(function(d) {
+						        return xScale(d.year);
+						    })
+						    .y(function(d) {
+						        return yScale(d.sale);
+						    })
+						    .interpolate("basis");
+						}
+			 		</script>
+				<div class="col-sm-5" id="area2">
+					<script>
+
+			 			var data = [{
+						    "sale": "202",
+						    "year": "0.0"
+						}, {
+						    "sale": "215",
+						    "year": "0.1"
+						}, {
+						    "sale": "179",
+						    "year": "0.2"
+						}, {
+						    "sale": "199",
+						    "year": "0.3"
+						}, {
+						    "sale": "134",
+						    "year": "0.4"
+						}, {
+						    "sale": "176",
+						    "year": "0.5"
+						}];
+
+						drawLineGraph(data);
+						//drawGraph("#area1", "data2.csv");
+						drawGraph("#area2", "data2.csv");
+					</script>
+				</div>
 			</div>
 		</div>
 	</div>
