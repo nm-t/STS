@@ -66,15 +66,15 @@
 			died_at_stage = rate_results[2];
 			results[results.length] = { 
 				'trueRate' : rate,
-				'passed' : passed,
-				'numSuccess' : passed_stage,
+				'passFraction' : passed,
+				'numSuccesses' : passed_stage,
 				'stageFailed' : died_at_stage,
 			};
 		});
-		console.log('results ' + results);
+		
 		return results;
 	};
 
-	//createGrid([{ 'numPeople' : 5, 'passThreshold' : 3}, {'numPeople' : 5, 'passThreshold' : 6}], [0.5]);
+	//createGrid([{ 'numPeople' : 1, 'passThreshold' : 1}, {'numPeople' : 2, 'passThreshold' : 2}], [0.5]);
 })();
 
