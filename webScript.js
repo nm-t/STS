@@ -1,11 +1,9 @@
 $( document ).ready(function() {
 	var stageNum = 1;
+	console.log('is this even');
     $("#addStage").on('click', function() {
     	
-    	var newStage = "<li class='stage'>
-        <h4>Stage " + stageNum + "</h4>
-        Number of people <form class='stageForm'><input type='number' class='people' min='0' style='width:50px'><br>
-        Rule <input type='number' class='rule' min='0' style='width:50px'></form></li>"
+    	var newStage = "<li class='stage' ><h4>Stage " + stageNum + "</h4>Number of people <input type='number' class='people' min='0' style='width:50px'><br>Rule <input type='number' class='rule' min='0' style='width:50px'></li>"
         $("#trialSim").append(newStage);
         stageNum += 1
     });
@@ -21,11 +19,6 @@ $( document ).ready(function() {
     			if (!peopleArray[i] || !ruleArray[i]){
     				allFieldOk = false;
     				//alert saying that a box is empty
-
-                    // Data validation to check for empty fields
-                    $(document).ready(function() {
-                        $('.stage').formValidation();
-                    });
     			}
     			sumPeople += peopleArray[i];
     			
