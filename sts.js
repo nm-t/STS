@@ -1,5 +1,3 @@
-var R = require("ramda");
-
 // Assumes input is in strictly ascending order by true success rate
 var ctr = function(grid) {
     var outputPairs = [];
@@ -52,6 +50,11 @@ var ctrGivenF = function (grid) {
     return outputPairs;
 };
 
+var to2dArray = R.map(function (gridPoint) {
+    return [gridPoint.trGivenS, gridPoint.trueRate];
+});
+
+
 var testData1 = [
     { trueRate: 0.1, passFraction: 0.15 },
     { trueRate: 0.2, passFraction: 0.3 },
@@ -64,4 +67,11 @@ var testData2 = [
     { trueRate: 0.3, passFraction: 0.7 }
 ];
 
-console.log(ctrGivenS(testData1, [1,1,1]));
+
+var grid =  createGrid([
+            {numPeople: 1, passThreshold: 1},
+            {numPeople: 5, passThreshold: 3 },
+            {numPeople: 10, passThreshold: 5},
+], [0.2, 0.4, 0.7]);
+console.log('stage=======', grid);
+console.log('sts', to2dArray(ctrGivenS(grid, [1, 1, 1])), grid);
