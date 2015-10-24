@@ -90,9 +90,9 @@ $( document ).ready(function() {
 //#trgraph, #visualisation, #trgivenfail
 //passFraction, trGivenS, trGivenF
 
-                graphCustom(trGraphData, '#trgraph', 'passFraction');
-				graphCustom(graphDataGivenTrue, '#visualisation', 'trGivenS');
-                graphCustom(trGivenFData, '#trgivenfail', 'trGivenF');
+                drawGraph(trGraphData, '#trgraph', 'passFraction');
+				drawGraph(graphDataGivenTrue, '#visualisation', 'trGivenS');
+                drawGraph(trGivenFData, '#trgivenfail', 'trGivenF');
                 //graphTrGivenS(graphDataGivenTrue);
                 //console.log(trGraphData);
 
