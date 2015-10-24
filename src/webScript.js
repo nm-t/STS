@@ -27,7 +27,7 @@ $( document ).ready(function() {
 
         
         $("#trialSim").append(newStage);
-        var newButton = "<li id='addrule'><input type='button' value='Add'></li>";        
+        var newButton = "<li id='addrule'><input type='button' value='Add Stage'></li>";        
         $("#trialSim").append(newButton);
         stageNum += 1;
 
