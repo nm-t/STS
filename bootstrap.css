@@ -6827,3 +6827,8 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+.stage {
+	border-style:solid;
+	border-width:1px;
+	padding:5px;
+}
