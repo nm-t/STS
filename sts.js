@@ -1,14 +1,3 @@
-// [{
-//     trueRate,
-//     int pass,
-//     [numSuccess],
-//     stageFailed
-// }]
-
-// [(cumulativeTrueRate, successRate)]
-//
-//
-
 var R = require("ramda");
 
 // Assumes input is in strictly ascending order by true success rate
