@@ -1,8 +1,6 @@
 $( document ).ready(function() {
 	var stageNum = 1;
-	console.log('is this even');
     $("#addStage").on('click', function() {
-    	console.log('called');
     	var newStage = "<li class='stage' ><h4>Stage " + stageNum + "</h4>Number of people <input type='number' class='people' min='0' style='width:50px'><br>Rule <input type='number' class='rule' min='0' style='width:50px'></li>"
         $("#trialSim").append(newStage);
         stageNum += 1

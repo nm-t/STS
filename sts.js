@@ -1,5 +1,6 @@
 // Assumes input is in strictly ascending order by true success rate
-var ctr = function(grid) {
+var ctr = function(grid, weights) {
+    if (!weights) weights = R.repeat(1, grid.length);
     var outputPairs = [];
     var cumulativePassRate = 0;
     grid.forEach(function (row, index) {
@@ -13,6 +14,7 @@ var ctr = function(grid) {
 };
 
 var ctrGivenS = function (grid, weights) {
+    if (!weights) weights = R.repeat(1, grid.length);
     var outputPairs = [];
     var cumulativePassRate = 0;
     var trueRateProportion = 1/grid.length;
@@ -38,7 +40,8 @@ var ctrGivenS = function (grid, weights) {
     return outputPairs;
 };
 
-var ctrGivenF = function (grid) {
+var ctrGivenF = function (grid, weights) {
+    if (!weights) weights = R.repeat(1, grid.length);
     var outputPairs = [];
     var cumulativePassRate = 0;
     var trueRateProportion = 1/grid.length;

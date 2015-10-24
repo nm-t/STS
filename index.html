@@ -61,62 +61,63 @@
 				<div class="col-sm-5" id="area1">
 			                <svg id="visualisation" width="400" height="270"></svg>
  		<script>
-var data = ctrGivenS(grid, [1,1,1]);
-var firstData = R.last(data);
-var lastData = R.head(data);
-var trueRate = R.prop('trueRate');
-var trGivenS  = R.prop('trGivenS');
-var firstTrueRate = trueRate(firstData);
-var lastTrueRate = trueRate(lastData);
-var firstTrGivenS = trGivenS(firstData);
-var lastTrGivenS = trGivenS(lastData);
+var graphTrGivenS = function (data) {
+    var data = ctrGivenS(grid, [1,1,1]);
+    var firstData = R.last(data);
+    var lastData = R.head(data);
+    var trueRate = R.prop('trueRate');
+    var trGivenS  = R.prop('trGivenS');
+    var firstTrueRate = trueRate(firstData);
+    var lastTrueRate = trueRate(lastData);
+    var firstTrGivenS = trGivenS(firstData);
+    var lastTrGivenS = trGivenS(lastData);
 
-			var vis = d3.select("#visualisation"),
-			    WIDTH = 400,
-			    HEIGHT = 270,
-			    MARGINS = {
-			        top: 20,
-			        right: 20,
-			        bottom: 20,
-			        left: 50
-			    },
+    var vis = d3.select("#visualisation"),
+        WIDTH = 400,
+        HEIGHT = 270,
+        MARGINS = {
+            top: 20,
+            right: 20,
+            bottom: 20,
+            left: 50
+        },
 
-		    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([firstTrueRate,lastTrueRate]),
-		    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([lastTrGivenS, firstTrGivenS]),
+    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([firstTrueRate,lastTrueRate]),
+    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([lastTrGivenS, firstTrGivenS]),
 
-		    xAxis = d3.svg.axis()
-			    .scale(xScale),
-			  
-			yAxis = d3.svg.axis()
-			    .scale(yScale)
-    			.orient("left");
+    xAxis = d3.svg.axis()
+        .scale(xScale),
+    yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left");
 
-		    vis.append("svg:g")
-			    .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-			    .call(xAxis);
-		    vis.append("svg:g")
-			    .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-			    .call(yAxis);
+    vis.append("svg:g")
+        .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+        .call(xAxis);
+    vis.append("svg:g")
+        .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+        .call(yAxis);
 
-		    var lineGen = d3.svg.line()
-				.x(function(d) {
-				return xScale(d.trueRate);
-				})
-				.y(function(d) {
-				return yScale(d.trGivenS);
-				});
+    var lineGen = d3.svg.line()
+        .x(function(d) {
+        return xScale(d.trueRate);
+        })
+        .y(function(d) {
+        return yScale(d.trGivenS);
+        });
 
-			vis.append('svg:path')
-			  .attr('d', lineGen(data));
+    vis.append('svg:path')
+      .attr('d', lineGen(data));
 
-			var lineGen = d3.svg.line()
-			    .x(function(d) {
-			        return xScale(d.year);
-			    })
-			    .y(function(d) {
-			        return yScale(d.sale);
-			    })
-			    .interpolate("basis");
+    var lineGen = d3.svg.line()
+        .x(function(d) {
+            return xScale(d.year);
+        })
+        .y(function(d) {
+            return yScale(d.sale);
+        })
+        .interpolate("basis");
+}
  		</script>
 				<div class="col-sm-5" id="area2">
 				</div>
