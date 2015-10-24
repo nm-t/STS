@@ -6,6 +6,7 @@
 
 	<link href="bootstrap.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script type="text/javascript" src="ramda.min.js"></script>
 	<script type="text/javascript" src="bin/webScript.js"></script>
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="jstat.min.js"></script>
@@ -29,7 +30,7 @@
 				<ul class="list-unstyled">
 					<li><h3>Stages</h3>
 						<!-- TODO: min/max vals -->
-						<input type="number" min="0" max="100" value="0">
+						<input type="number" id='stageNum' name="stageNum" value="1" min="1" max="100">
 					</li>
 
 					<li><h3>No. individuals</h3>
@@ -48,6 +49,7 @@
 		<div class="col-sm-10" id="trialString">
 				<h2>Trial string</h2>
 				<ul id="trialSim" class="list-inline"></ul>
+				<button id="start">Start</button>
 		</div>
 		
 
