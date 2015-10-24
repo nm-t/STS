@@ -2,10 +2,7 @@ $( document ).ready(function() {
 	var stageNum = 1;
     $("#addStage").on('click', function() {
     	
-    	var newStage = "<li class='stage'>
-        <h4>Stage " + stageNum + "</h4>
-        Number of people <form class='stageForm'><input type='number' class='people' min='0' style='width:50px'><br>
-        Rule <input type='number' class='rule' min='0' style='width:50px'></form></li>"
+    	var newStage = "<li class='stage'><h4>Stage " + stageNum + "</h4>Number of people <form class='stageForm'><input type='number' class='people' min='0' style='width:50px'><br>Rule <input type='number' class='rule' min='0' style='width:50px'></form></li>"
         $("#trialSim").append(newStage);
         stageNum += 1
     });
@@ -17,7 +14,7 @@ $( document ).ready(function() {
     		var sumPeople = 0;
     		var i;
     		var allFieldsOk = true;
-    		//checking if any boxes are empty/if the rule exceeds the total participants at any point
+    		//checking if any boxes are empty if the rule exceeds the total participants at any point
     		for (i = 0; i<peopleArray.length; i++){
     			if (!peopleArray[i] || !ruleArray[i]){
     				allFieldsOk = false;
@@ -44,8 +41,9 @@ $( document ).ready(function() {
 				var grid = createGrid(inputData, interpolateRates(0, 1, 3));
 				//these three functions have optional parameter "weight[]"
 				//cumulateProb = ctr(grid);
-				data = ctrGivenS(grid);
-				//cumulateGivenFailure = ctrGivenF(grid);
+				graphDataGivenTrue = ctrGivenS(grid);
+				
+				graphTrGivenS(graphDataGivenTrue);
 			
     		}
     		
