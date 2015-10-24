@@ -1,0 +1,23 @@
+{
+  "name": "sts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sts.js",
+  "dependencies": {},
+  "devDependencies": {
+    "ramda": "^0.18.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/nm-t/sts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nm-t/sts/issues"
+  },
+  "homepage": "https://github.com/nm-t/sts#readme"
+}
