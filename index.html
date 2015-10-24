@@ -61,25 +61,15 @@
 				<div class="col-sm-5" id="area1">
 			                <svg id="visualisation" width="400" height="270"></svg>
  		<script>
- 			var data = [{
-			    "sale": "202",
-			    "year": "2000"
-			}, {
-			    "sale": "215",
-			    "year": "2001"
-			}, {
-			    "sale": "179",
-			    "year": "2002"
-			}, {
-			    "sale": "199",
-			    "year": "2003"
-			}, {
-			    "sale": "134",
-			    "year": "2003"
-			}, {
-			    "sale": "176",
-			    "year": "2010"
-			}];
+var data = ctrGivenS(grid, [1,1,1]);
+var firstData = R.last(data);
+var lastData = R.head(data);
+var trueRate = R.prop('trueRate');
+var trGivenS  = R.prop('trGivenS');
+var firstTrueRate = trueRate(firstData);
+var lastTrueRate = trueRate(lastData);
+var firstTrGivenS = trGivenS(firstData);
+var lastTrGivenS = trGivenS(lastData);
 
 			var vis = d3.select("#visualisation"),
 			    WIDTH = 400,
@@ -91,8 +81,8 @@
 			        left: 50
 			    },
 
-		    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([2000,2010]),
-		    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([134,215]),
+		    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([firstTrueRate,lastTrueRate]),
+		    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([lastTrGivenS, firstTrGivenS]),
 
 		    xAxis = d3.svg.axis()
 			    .scale(xScale),
@@ -110,10 +100,10 @@
 
 		    var lineGen = d3.svg.line()
 				.x(function(d) {
-				return xScale(d.year);
+				return xScale(d.trueRate);
 				})
 				.y(function(d) {
-				return yScale(d.sale);
+				return yScale(d.trGivenS);
 				});
 
 			vis.append('svg:path')

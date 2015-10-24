@@ -2,7 +2,7 @@
     var binomials = {};
 
 
-    window.runSeqTrial = function(stages, trueRate) {
+    var runSeqTrial = function(stages, trueRate) {
         var passed_previous = [1.0];
         var pass_current = [];
         var previous_cutoff = 0;
@@ -73,7 +73,40 @@
         return results;
     };
 
+
+    window.interpolateRates = function(min, max, count) {
+    	if (count == 0) {
+    		return [];
+    	} else if (count == 1) {
+    		return [max];
+    	} else {
+    		var rates = [min];
+    		var gap = (max - min) / (count - 1);
+    		var current = min;
+    		for (var i=1; i < count; i++) {
+    			current += gap;
+    			rates[rates.length] = current;
+    		}
+    		return rates;
+    	}
+    };
+
+    var cdfit = function(stages, rate) {
+    	var product = 1.0;
+
+    	var nominator = 0.;
+    	var denominator = 0.;
+
+    	stages.forEach(function(stage, stage_index) {
+    		nominator = stage.passThreshold;
+    		denominator += stage.numPeople;
+    		console.log('cdf of ' + nominator + ', ' + denominator + ': ' + jStat.binomial.cdf(nominator, denominator, rate));
+    		product *= (1.0 - jStat.binomial.cdf(nominator, denominator, rate));
+    	});
+    	return product;
+    };
 	
+	/*
 	createGrid([{ 'numPeople' : 1, 'passThreshold' : 1}, 
 		{'numPeople' : 1, 'passThreshold' : 2},
 		{'numPeople' : 1, 'passThreshold' : 3}], [0.5]);
@@ -91,6 +124,18 @@
 		{'numPeople' : 1, 'passThreshold' : 3},
 		{'numPeople' : 1, 'passThreshold' : 4}], [0.5]);
 
+	createGrid([{ 'numPeople' : 5, 'passThreshold' : 2}, 
+		{'numPeople' : 5, 'passThreshold' : 4},
+		{'numPeople' : 10, 'passThreshold' : 12},
+		], [0.6]);
 
+
+	console.log(cdfit([{ 'numPeople' : 5, 'passThreshold' : 2}, 
+		{'numPeople' : 5, 'passThreshold' : 4},
+		{'numPeople' : 10, 'passThreshold' : 12},
+		], [0.6]));
+	*/
+
+	//console.log(interpolateRates(0, 1, 20));
 })();
 
