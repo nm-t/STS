@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="utf-8"/>
 	<title>Sequential Trial Simulator</title>
 	<link href="bootstrap.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script type="text/javascript" src="bin/webScript.js"></script>
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 
 	<style> /* set the CSS */
-
 	path { 
 	    stroke: steelblue;
 	    stroke-width: 2;
@@ -20,7 +22,6 @@
 	    stroke-width: 1;
 	    shape-rendering: crispEdges;
 	}
-
 	</style>
 
 </head>
@@ -32,39 +33,37 @@
 	
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="col-sm-2">
+		<div class="col-sm-2" id="input">
 				<!-- Parameters etc. -->
 				<h2>Parameters</h2>
 				<!-- TODO: uses lists -->
-				<div class="input">
-					<p><h3>Stages</h3>
+				<ul class="list-unstyled">
+					<li><h3>Stages</h3>
 						<!-- TODO: min/max vals -->
-						<input type="number">
-					</p>
+						<input type="number" min="0" max="100">
+					</li>
 
-					<p><h3>No. individuals</h3>
-						<input type="number">
-					</p>
+					<li><h3>No. individuals</h3>
+						<input type="number" min="0">
+					</li>
 
-					<p><h3>Rule</h3>
+					<li><h3>Rule</h3>
 						<!-- TODO: tooltips for how to use Rule -->
 						How many need to pass before moving on?<br>
 						<input type="number">
-					</p>
-					<input type="submit">
-				</div>
+					</li>
+				</ul>
+					<button id="addStage">Add</button>
 			</div>
 
-		<div class="trialString">
-			<div class="col-sm-10">
+		<div class="col-sm-10" id="trialString">
 				<h2>Trial string</h2>
 				<p>Fusce arcu velit, scelerisque vel urna non, convallis pretium lectus. Suspendisse at consequat erat. Donec efficitur vestibulum dignissim. Morbi consequat nulla ac felis tincidunt, in pellentesque enim sodales. Donec ac odio ante. Integer pulvinar risus non dolor ullamcorper, eget tincidunt erat sollicitudin. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum quis elementum nisl, id varius leo. Suspendisse bibendum ac magna consectetur eleifend. Fusce et efficitur mi. Aliquam eros ex, pulvinar vitae augue a, porta porta nunc. Nunc vulputate augue sapien, ut varius eros mollis sit amet. Maecenas porttitor tempus placerat. Duis sodales vel purus sit amet auctor. Nam bibendum ipsum nec risus vulputate, at consequat odio auctor.</p>
-			</div>
 		</div>
 		
 		<!-- Output graphs div -->
 		<div class="row-fluid">
-			<div class="col-sm-10">
+			<div class="col-sm-10" id="output">
 				<h2>Output graphs</h2>
 				<div class="col-sm-5" id="area1">
 					<script>
