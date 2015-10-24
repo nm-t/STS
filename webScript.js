@@ -8,7 +8,6 @@ $( document ).ready(function() {
         stageNum += 1
     });
     $("#start").on('click',function(){
-    		
     		var values = [];
     		var peopleArray = $('.people').toArray().map(function(people) { return parseInt($(people).val()); });
     		var ruleArray = $('.rule').toArray().map(function(rule) { return parseInt($(rule).val()); });
@@ -19,6 +18,8 @@ $( document ).ready(function() {
     			if (!peopleArray[i] || !ruleArray[i]){
     				allFieldOk = false;
     				//alert saying that a box is empty
+                    console.log('FIELDS ARE NOT OK');
+                    alert("Name must be filled out");
     			}
     			sumPeople += peopleArray[i];
     			
