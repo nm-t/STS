@@ -38,12 +38,14 @@ $( document ).ready(function() {
     			var inputData = R.zip(peopleArray, ruleArray);
     			inputData = R.map(function (tuple) { return { numPeople: tuple[0], passThreshold: tuple[1] }; },inputData);
 				//at this point, we are ready to call createGrid on inputData
-				var grid = createGrid(inputData, interpolateRates(0, 1, 3));
+				var grid = createGrid(inputData, interpolateRates(0, 1, 11));
 				//these three functions have optional parameter "weight[]"
 				//cumulateProb = ctr(grid);
 				graphDataGivenTrue = ctrGivenS(grid);
+				var trGraphData = ctr(grid);
 				
 				graphTrGivenS(graphDataGivenTrue);
+				graphTr(graphDataGivenTrue);
 			
     		}
     		
