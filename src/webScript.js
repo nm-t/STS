@@ -44,8 +44,10 @@ $( document ).ready(function() {
 				graphDataGivenTrue = ctrGivenS(grid);
 				var trGraphData = ctr(grid);
 				
-				graphTrGivenS(graphDataGivenTrue);
-                console.log(trGraphData);
+                //graphCustom(graphDataGivenTrue, '#visualisation', 'trueRate');
+				//graphCustom(trGraphData, '#trgraph', 'passFraction');
+                graphTrGivenS(graphDataGivenTrue);
+                //console.log(trGraphData);
 				graphTr(trGraphData);
 			
     		}
