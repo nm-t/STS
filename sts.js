@@ -85,4 +85,5 @@ var grid =  createGrid([
             {numPeople: 5, passThreshold: 3 },
             {numPeople: 10, passThreshold: 5},
 ], [0.2, 0.4, 0.7]);
-console.log('sts', to2dArray(ctrGivenS(grid, [1, 1, 1])), grid);
+
+console.log('sts', ctrGivenS(grid, [1, 1, 1]), grid);
