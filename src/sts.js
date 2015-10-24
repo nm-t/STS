@@ -1,13 +1,12 @@
 // Assumes input is in strictly ascending order by true success rate
 var ctr = function(grid, weights) {
+    console.log('HELLOjfdskfjasdkfjdkfsdjaklfdjskfdsjkfdasjfklda', grid);
     if (!weights) weights = R.repeat(1, grid.length);
     var outputPairs = [];
-    var cumulativePassRate = 0;
-    grid.forEach(function (row, index) {
-        cumulativePassRate += row.passFraction;
+    grid.forEach(function (row) {
         outputPairs.push( {
             trueRate: row.trueRate,
-            passFraction: cumulativePassRate / (index + 1)
+            passFraction: row.passFraction
         });
     });
     return outputPairs;
