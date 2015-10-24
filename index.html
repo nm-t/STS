@@ -3,44 +3,29 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Sequential Trial Simulator</title>
+
 	<link href="bootstrap.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript" src="bin/webScript.js"></script>
 	<script src="http://d3js.org/d3.v3.min.js"></script>
-
-	<style> /* set the CSS */
-	path { 
-	    stroke: steelblue;
-	    stroke-width: 2;
-	    fill: none;
-	}
-
-	.axis path,
-	.axis line {
-	    fill: none;
-	    stroke: grey;
-	    stroke-width: 1;
-	    shape-rendering: crispEdges;
-	}
-	</style>
-
 </head>
 
 <body>
 	<div class="jumbotron">
-		<h1>STS</h1>
+		<h1>Sequential Trial Simulator</h1>
+		<p>A tool for simulating drug trials.</p>
 	</div>
 	
 	<div class="container-fluid">
 		<div class="row-fluid">
-		<div class="col-sm-2" id="input">
+			<div class="col-sm-2" id="input">
 				<!-- Parameters etc. -->
 				<h2>Parameters</h2>
 				<!-- TODO: uses lists -->
 				<ul class="list-unstyled">
 					<li><h3>Stages</h3>
 						<!-- TODO: min/max vals -->
-						<input type="number" min="0" max="100">
+						<input type="number" min="0" max="100" value="0">
 					</li>
 
 					<li><h3>No. individuals</h3>
@@ -58,82 +43,88 @@
 
 		<div class="col-sm-10" id="trialString">
 				<h2>Trial string</h2>
-				<p>Fusce arcu velit, scelerisque vel urna non, convallis pretium lectus. Suspendisse at consequat erat. Donec efficitur vestibulum dignissim. Morbi consequat nulla ac felis tincidunt, in pellentesque enim sodales. Donec ac odio ante. Integer pulvinar risus non dolor ullamcorper, eget tincidunt erat sollicitudin. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum quis elementum nisl, id varius leo. Suspendisse bibendum ac magna consectetur eleifend. Fusce et efficitur mi. Aliquam eros ex, pulvinar vitae augue a, porta porta nunc. Nunc vulputate augue sapien, ut varius eros mollis sit amet. Maecenas porttitor tempus placerat. Duis sodales vel purus sit amet auctor. Nam bibendum ipsum nec risus vulputate, at consequat odio auctor.</p>
+				<ul id="trialSim" class="list-inline"></ul>
 		</div>
 		
+		<script>
+			var drawGraph = function(area, data) {
+				// Set the dimensions of the canvas / graph
+				var margin = {top: 30, right: 20, bottom: 30, left: 50},
+				    width = 400 - margin.left - margin.right,
+				    height = 270 - margin.top - margin.bottom;
+
+				// Parse the date / time
+				var parseDate = d3.time.format("%d-%b-%y").parse;
+
+				// Set the ranges
+				var x = d3.time.scale().range([0, width]);
+				var y = d3.scale.linear().range([height, 0]);
+
+				// Define the axes
+				var xAxis = d3.svg.axis().scale(x)
+				    .orient("bottom").ticks(5);
+
+				var yAxis = d3.svg.axis().scale(y)
+				    .orient("left").ticks(5);
+
+				// Define the line
+				var valueline = d3.svg.line()
+				    .x(function(d) { return x(d.date); })
+				    .y(function(d) { return y(d.close); });
+				    
+				// Adds the svg canvas
+				var svg = d3.select(area)
+				    .append("svg")
+				        .attr("width", width + margin.left + margin.right)
+				        .attr("height", height + margin.top + margin.bottom)
+				    .append("g")
+				        .attr("transform", 
+				              "translate(" + margin.left + "," + margin.top + ")");
+
+				// Get the data
+				d3.csv(data, function(error, data) {
+				    data.forEach(function(d) {
+				        d.date = parseDate(d.date);
+				        d.close = +d.close;
+				    });
+
+				    // Scale the range of the data
+				    x.domain(d3.extent(data, function(d) { return d.date; }));
+				    y.domain([0, d3.max(data, function(d) { return d.close; })]);
+
+				    // Add the valueline path.
+				    svg.append("path")
+				        .attr("class", "line")
+				        .attr("d", valueline(data));
+
+				    // Add the X Axis
+				    svg.append("g")
+				        .attr("class", "x axis")
+				        .attr("transform", "translate(0," + height + ")")
+				        .call(xAxis);
+
+				    // Add the Y Axis
+				    svg.append("g")
+				        .attr("class", "y axis")
+				        .call(yAxis);
+
+				});
+			};
+		</script>
+
 		<!-- Output graphs div -->
 		<div class="row-fluid">
 			<div class="col-sm-10" id="output">
 				<h2>Output graphs</h2>
+
 				<div class="col-sm-5" id="area1">
-					<script>
-					// Set the dimensions of the canvas / graph
-					var margin = {top: 30, right: 20, bottom: 30, left: 50},
-					    width = 400 - margin.left - margin.right,
-					    height = 270 - margin.top - margin.bottom;
-
-					// Parse the date / time
-					var parseDate = d3.time.format("%d-%b-%y").parse;
-
-					// Set the ranges
-					var x = d3.time.scale().range([0, width]);
-					var y = d3.scale.linear().range([height, 0]);
-
-					// Define the axes
-					var xAxis = d3.svg.axis().scale(x)
-					    .orient("bottom").ticks(5);
-
-					var yAxis = d3.svg.axis().scale(y)
-					    .orient("left").ticks(5);
-
-					// Define the line
-					var valueline = d3.svg.line()
-					    .x(function(d) { return x(d.date); })
-					    .y(function(d) { return y(d.close); });
-					    
-					// Adds the svg canvas
-					var svg = d3.select("#area1")
-					    .append("svg")
-					        .attr("width", width + margin.left + margin.right)
-					        .attr("height", height + margin.top + margin.bottom)
-					    .append("g")
-					        .attr("transform", 
-					              "translate(" + margin.left + "," + margin.top + ")");
-
-					// Get the data
-					d3.csv("data.csv", function(error, data) {
-					    data.forEach(function(d) {
-					        d.date = parseDate(d.date);
-					        d.close = +d.close;
-					    });
-
-					    // Scale the range of the data
-					    x.domain(d3.extent(data, function(d) { return d.date; }));
-					    y.domain([0, d3.max(data, function(d) { return d.close; })]);
-
-					    // Add the valueline path.
-					    svg.append("path")
-					        .attr("class", "line")
-					        .attr("d", valueline(data));
-
-					    // Add the X Axis
-					    svg.append("g")
-					        .attr("class", "x axis")
-					        .attr("transform", "translate(0," + height + ")")
-					        .call(xAxis);
-
-					    // Add the Y Axis
-					    svg.append("g")
-					        .attr("class", "y axis")
-					        .call(yAxis);
-
-					});
-
-					</script>
 				</div>
 
 				<div class="col-sm-5" id="area2">
-					<img src="http://img3.wikia.nocookie.net/__cb20140527213654/daieegeepedia/images/1/18/Happy_Awesome_Face.png">
+					<script>
+						drawGraph("#area1", "data.csv");
+						drawGraph("#area2", "data2.csv");
+					</script>
 				</div>
 			</div>
 		</div>
