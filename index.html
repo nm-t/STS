@@ -61,209 +61,14 @@
 	                <svg id="trgivenfail" width="400" height="270"></svg>
 
 			 		<script>
-<<<<<<< HEAD
-						var graphTr = function (data) {
-						    $('#trgraph').html('');
-=======
-var graphTrGivenF = function (data) {
-    $('#trgivenfail').html('');
-						var firstData = R.last(data);
-						var lastData = R.head(data);
-						var trueRate = R.prop('trueRate');
-						var trGivenS  = R.prop('trGivenF');
-						var firstTrueRate = trueRate(firstData);
-						var lastTrueRate = trueRate(lastData);
-						var firstTrGivenS = trGivenS(firstData);
-						var lastTrGivenS = trGivenS(lastData);
 
-						var vis = d3.select("#trgivenfail"),
-						    WIDTH = 400,
-						    HEIGHT = 270,
-						    MARGINS = {
-						        top: 20,
-						        right: 20,
-						        bottom: 20,
-						        left: 50
-						    },
-
-					    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([firstTrueRate,lastTrueRate]),
-					    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([lastTrGivenS, firstTrGivenS]),
-
-					    xAxis = d3.svg.axis()
-						    .scale(xScale),
-						  
-						yAxis = d3.svg.axis()
-						    .scale(yScale)
-			    			.orient("left");
-
-					    vis.append("svg:g")
-						    .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-						    .call(xAxis);
-					    vis.append("svg:g")
-						    .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-						    .call(yAxis);
-
-					    var lineGen = d3.svg.line()
-							.x(function(d) {
-							return xScale(d.trueRate);
-							})
-							.y(function(d) {
-							return yScale(d.trGivenF);
-							});
-
-						vis.append('svg:path')
-						  .attr('d', lineGen(data));
-
-                        vis.append('text')
-                            .attr('transform', 'translate(200, 270)')
-                            .style('text-anchor', 'middle')
-                            .text('Hi hello');
-
-						var lineGen = d3.svg.line()
-						    .x(function(d) {
-						        return xScale(d.year);
-						    })
-						    .y(function(d) {
-						        return yScale(d.sale);
-						    })
-						    .interpolate("basis");
-};
-var graphTr = function (data) {
-    $('#trgraph').html('');
->>>>>>> 264c6e4c6c7e30d010e16df3130dc29dfbdcb92a
-						var firstData = R.last(data);
-						var lastData = R.head(data);
-						var trueRate = R.prop('trueRate');
-						var trGivenS  = R.prop('passFraction');
-						var firstTrueRate = trueRate(firstData);
-						var lastTrueRate = trueRate(lastData);
-						var firstTrGivenS = trGivenS(firstData);
-						var lastTrGivenS = trGivenS(lastData);
-    console.log('hello', data, firstTrGivenS, lastTrueRate);
-
-						var vis = d3.select("#trgraph"),
-						    WIDTH = 400,
-						    HEIGHT = 270,
-						    MARGINS = {
-						        top: 20,
-						        right: 20,
-						        bottom: 20,
-						        left: 50
-						    },
-
-					    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([firstTrueRate,lastTrueRate]),
-					    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([lastTrGivenS, firstTrGivenS]),
-
-					    xAxis = d3.svg.axis()
-						    .scale(xScale),
-						  
-						yAxis = d3.svg.axis()
-						    .scale(yScale)
-			    			.orient("left");
-
-					    vis.append("svg:g")
-						    .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-						    .call(xAxis);
-					    vis.append("svg:g")
-						    .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-						    .call(yAxis);
-
-					    var lineGen = d3.svg.line()
-							.x(function(d) {
-							return xScale(d.trueRate);
-							})
-							.y(function(d) {
-							return yScale(d.passFraction);
-							});
-
-						vis.append('svg:path')
-						  .attr('d', lineGen(data));
-
-                        vis.append('text')
-                            .attr('transform', 'translate(200, 250)')
-                            .style('text-anchor', 'middle')
-                            .text('graphTr vanilla');
-
-						var lineGen = d3.svg.line()
-						    .x(function(d) {
-						        return xScale(d.year);
-						    })
-						    .y(function(d) {
-						        return yScale(d.sale);
-						    })
-						    .interpolate("basis");
-};
-
-var graphTrGivenS = function (data) {
-    $('#visualisation').html('');
-						var firstData = R.last(data);
-						var lastData = R.head(data);
-						var trueRate = R.prop('trueRate');
-						var trGivenS  = R.prop('trGivenS');
-						var firstTrueRate = trueRate(firstData);
-						var lastTrueRate = trueRate(lastData);
-						var firstTrGivenS = trGivenS(firstData);
-						var lastTrGivenS = trGivenS(lastData);
-
-						var vis = d3.select("#visualisation"),
-						    WIDTH = 400,
-						    HEIGHT = 270,
-						    MARGINS = {
-						        top: 20,
-						        right: 20,
-						        bottom: 20,
-						        left: 50
-						    },
-
-					    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([firstTrueRate,lastTrueRate]),
-					    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([lastTrGivenS, firstTrGivenS]),
-
-					    xAxis = d3.svg.axis()
-						    .scale(xScale),
-						  
-						yAxis = d3.svg.axis()
-						    .scale(yScale)
-			    			.orient("left");
-
-					    vis.append("svg:g")
-						    .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-						    .call(xAxis);
-					    vis.append("svg:g")
-						    .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-						    .call(yAxis);
-
-					    var lineGen = d3.svg.line()
-							.x(function(d) {
-							return xScale(d.trueRate);
-							})
-							.y(function(d) {
-							return yScale(d.trGivenS);
-							});
-
-						vis.append('svg:path')
-						  .attr('d', lineGen(data));
-
-                        vis.append('text')
-                            .attr('transform', 'translate(200, 200)')
-                            .style('text-anchor', 'middle')
-                            .text('graphTrGivenS vanilla');
-
-						var lineGen = d3.svg.line()
-						    .x(function(d) {
-						        return xScale(d.year);
-						    })
-						    .y(function(d) {
-						        return yScale(d.sale);
-						    })
-						    .interpolate("basis");
-};
 
 var graphCustom = function (data, graphLocation, trGivenSType) {
-    $(graphLocation).html('');
+    $(graphLocation).html(''); //#trgraph, #visualisation, #trgivenfail
 						var firstData = R.last(data);
 						var lastData = R.head(data);
 						var trueRate = R.prop('trueRate');
-						var trGivenS  = R.prop(trGivenSType); //2. trGivenS or 1. passFraction
+						var trGivenS  = R.prop(trGivenSType); //passFraction, trGivenS, trGivenF
 						var firstTrueRate = trueRate(firstData);
 						var lastTrueRate = trueRate(lastData);
 						var firstTrGivenS = trGivenS(firstData);
@@ -301,16 +106,16 @@ var graphCustom = function (data, graphLocation, trGivenSType) {
 							return xScale(d.trueRate);
 							})
 							.y(function(d) {
-							return yScale(d.trGivenS);
+							return yScale(d[trGivenSType]);
 							});
 
 						vis.append('svg:path')
 						  .attr('d', lineGen(data));
 
                         vis.append('text')
-                            .attr('transform', 'translate(200, 270)')
+                            .attr('transform', 'translate(200, 230)')
                             .style('text-anchor', 'middle')
-                            .text('CUSTOM FO REAL');
+                            .text(graphLocation);
 
 						var lineGen = d3.svg.line()
 						    .x(function(d) {

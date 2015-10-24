@@ -87,13 +87,17 @@ $( document ).ready(function() {
 				var trGraphData = ctr(grid);
 				var trGivenFData = ctrGivenF(grid);
 				
-                //graphCustom(graphDataGivenTrue, '#visualisation', 'trueRate');
-				//graphCustom(trGraphData, '#trgraph', 'passFraction');
-                graphTrGivenS(graphDataGivenTrue);
+//#trgraph, #visualisation, #trgivenfail
+//passFraction, trGivenS, trGivenF
+
+                graphCustom(trGraphData, '#trgraph', 'passFraction');
+				graphCustom(graphDataGivenTrue, '#visualisation', 'trGivenS');
+                graphCustom(trGivenFData, '#trgivenfail', 'trGivenF');
+                //graphTrGivenS(graphDataGivenTrue);
                 //console.log(trGraphData);
 
-				graphTr(trGraphData);
-				graphTrGivenF(trGivenFData);
+				//graphTr(trGraphData);
+				//graphTrGivenF(trGivenFData);
 			
     		}
             e.preventDefault();
