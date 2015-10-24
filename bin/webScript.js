@@ -37,7 +37,7 @@ $( document ).ready(function() {
     			}    			
     		}
     		if (allFieldsOk){
-    			console.log("things happened");
+    			
     			//TODO get weights input from user, to weight the trials of different true effectiveness
     			var inputData = R.zip(peopleArray, ruleArray);
     			inputData = R.map(function (tuple) { return { numPeople: tuple[0], passThreshold: tuple[1] }; },inputData);
