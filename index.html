@@ -71,6 +71,7 @@ var graphTr = function (data) {
 						var lastTrueRate = trueRate(lastData);
 						var firstTrGivenS = trGivenS(firstData);
 						var lastTrGivenS = trGivenS(lastData);
+    console.log('hello', data, firstTrGivenS, lastTrueRate);
 
 						var vis = d3.select("#trgraph"),
 						    WIDTH = 400,
@@ -104,7 +105,7 @@ var graphTr = function (data) {
 							return xScale(d.trueRate);
 							})
 							.y(function(d) {
-							return yScale(d.trGivenS);
+							return yScale(d.passFraction);
 							});
 
 						vis.append('svg:path')

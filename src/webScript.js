@@ -45,6 +45,7 @@ $( document ).ready(function() {
 				var trGraphData = ctr(grid);
 				
 				graphTrGivenS(graphDataGivenTrue);
+                console.log(trGraphData);
 				graphTr(trGraphData);
 			
     		}
