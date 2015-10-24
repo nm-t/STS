@@ -103,11 +103,24 @@
 					vis.append('svg:path')
 					  .attr('d', lineGen(data));
 
+					// Graph title
+					vis.append('text')
+                        .attr('transform', 'translate(200, 20)')
+				        .attr('text-anchor', 'middle')
+				        .text(graphLocation);
+
 					// x axis label
                     vis.append('text')
                         .attr('transform', 'translate(200, 320)')
                         .style('text-anchor', 'middle')
-                        .text('Number of trials');
+                        .text('True efficacy/toxicity');
+
+                    // y axis label
+                    vis.append('text')
+					    .attr('dy', '1em')
+					    .attr('transform', 'rotate(-90)')
+                        .style('text-anchor', 'end')
+					    .text('Probability');
 
 					var lineGen = d3.svg.line()
 					    .x(function(d) {
