@@ -85,10 +85,11 @@ $( document ).ready(function() {
 				//cumulateProb = ctr(grid);
 				graphDataGivenTrue = ctrGivenS(grid);
 				var trGraphData = ctr(grid);
+				var trGivenFData = ctrGivenF(grid);
 				
 				graphTrGivenS(graphDataGivenTrue);
-                console.log(trGraphData);
 				graphTr(trGraphData);
+				graphTrGivenF(trGivenFData);
 			
     		}
             e.preventDefault();
