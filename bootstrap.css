@@ -12,6 +12,21 @@ html {
 body {
   margin: 0;
 }
+
+footer {
+    position:bottom;
+    padding-top: 25px;
+    height:100px;
+    width:100%;
+    background: transparent;
+}
+
+footer p {
+  font-size: 11px;
+  text-align: center;
+  color:grey;
+}
+
 article,
 aside,
 details,
