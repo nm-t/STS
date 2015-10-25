@@ -142,16 +142,50 @@ angular.module('sts')
             var r = calcGridData();
             var grid = r[0];
             var weights = r[1];
-
-            return ctrGivenS(grid, weights);
+            return [{ "key": 'Pass Fraction', values: to2dArrayParam('trueRate', 'trGivenS')(ctrGivenS(grid, weights)) }];
         },
         calcTrGivenFGraphData: function () {
             var r = calcGridData();
             var grid = r[0];
             var weights = r[1];
-
-            return ctrGivenF(grid, weights);
+            return [{ "key": 'Pass Fraction', values: to2dArrayParam('trueRate', 'trGivenF')(ctrGivenF(grid, weights)) }];
         }
+    };
+})
+.directive('trfGraph', function(stageStore, graphData) {
+    return {
+        scope: {},
+        link: function(scope) {
+            scope.stageStore = stageStore;
+            scope.trGraphData = [];
+            scope.$watch('stageStore', function () {
+                scope.trGraphData = graphData.calcTrGivenFGraphData();
+            }, true);
+            scope.xFormat = function(x) {
+                if (x === 1) return x;
+                return '≥' + x;
+            };
+        },
+        template: '<div style="width:500px !important;height:350px !important;"><h4>Negative predictive function</h4><nvd3-line-chart data="trGraphData" width="430" height="350" forceX="[0, 1]" xAxisTickFormat="xFormat"  xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
+
+    };
+})
+.directive('trsGraph', function(stageStore, graphData) {
+    return {
+        scope: {},
+        link: function(scope) {
+            scope.stageStore = stageStore;
+            scope.trGraphData = [];
+            scope.$watch('stageStore', function () {
+                scope.trGraphData = graphData.calcTrGivenSGraphData();
+            }, true);
+            scope.xFormat = function(x) {
+                if (x === 1) return x;
+                return '≥' + x;
+            };
+        },
+        template: '<div style="width:500px !important;height:350px !important;"><h4>Positive predictive function</h4><nvd3-line-chart data="trGraphData" width="430" height="350" forceX="[0, 1]" xAxisTickFormat="xFormat" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
+
     };
 })
 .directive('graphs', function(stageStore, graphData) {
@@ -163,8 +197,12 @@ angular.module('sts')
             scope.$watch('stageStore', function () {
                 scope.trGraphData = graphData.calcTrGraphData();
             }, true);
+            scope.xFormat = function(x) {
+                if (x === 1) return x;
+                return '≥' + x;
+            };
         },
-        template: '<div style="width:500px !important;height:350px !important;"><h4>True rate</h4><nvd3-line-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
+        template: '<div style="width:500px !important;height:350px !important;"><h4>Power function</h4><nvd3-line-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" xAxisTickFormat="xFormat" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
 
     };
 });
