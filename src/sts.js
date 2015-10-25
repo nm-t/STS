@@ -1,6 +1,5 @@
 // Assumes input is in strictly ascending order by true success rate
 var ctr = function(grid, weights) {
-    console.log('HELLOjfdskfjasdkfjdkfsdjaklfdjskfdsjkfdasjfklda', grid);
     if (!weights) weights = R.repeat(1, grid.length);
     var outputPairs = [];
     grid.forEach(function (row) {
