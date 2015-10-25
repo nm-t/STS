@@ -11,3 +11,9 @@ STS is written as a web application using HTML5/CSS(bootstrap) and JavaScript (A
 <h2>Usage</h2>
 
 Currently, the source code for STS can be downloaded and run on any browser.
+
+1. Add required amount of stages.
+2. Specify numbrt of participants per stage.
+3. Determine minimum total number of responses to pass to the next stage.
+
+N.B: The minimum repsonses to pass should not surpass the total number of participants upto and including the current stage.
