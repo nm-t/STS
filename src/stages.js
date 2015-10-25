@@ -11,6 +11,7 @@ angular.module('sts', ['nvd3ChartDirectives'])
     };
 
     return {
+        refresh: 0,
         stages: stages,
         removeStage: function(index) {
             stages.splice(index, 1);
