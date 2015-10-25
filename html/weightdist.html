@@ -1,35 +1,28 @@
 <div class="col-sm-12" id="distSetting">
-	<h3> True rate distribution settings </h3>
-    Uniform: 		<input type = "radio" name = "distType" value="uniform" checked="checked">&nbsp
-	Normal: 		<input type = "radio" name = "distType" value="normal">&nbsp
-	LogitNormal: 	<input type = "radio" name = "distType" value="logitnormal">
-	<br>
-	<div class="col-lg-12" id="uniform">
-		<div class="col-sm-4" id="uniform">
-			<br>
-			Min: <input type = "text" name = "min" value="0" size="2">
-			<br>
-			Max: <input type = "text" name = "max" value="1" size="2">
-		</div>
+    <h3> True rate distribution settings </h3>
+    Uniform: 		<input type = "radio" name = "distType" ng-model="distData.dist" value="uniform" checked="checked">&nbsp
+    LogitNormal: 	<input type = "radio" name = "distType" ng-model="distData.dist" value="logitnormal">
+    <br>
+    <div class="col-lg-12" id="uniform" ng-show="distData.dist==='uniform'">
+        <div class="col-sm-4" id="uniform">
+            <br>
+            Min: <input type = "text" name = "min" value="0" size="2" ng-model="distData.uniformParams.min">
+            <br>
+            Max: <input type = "text" name = "max" value="1" size="2" ng-model="distData.uniformParams.max">
+            <div class = "col-sm-5" id = "distGraphs"></div>
+        </div>
+    </div>
 
-		<div class="col-sm-4" id="normal" hidden>
-			<br>
-					
-			Mean: <input type = "text" name = "min" value="0" size="2">
-			<br>
-			Standard Deviation: <input type = "text" name = "max" value="1" size="2">
-		</div>
-				
-		<div class="col-sm-4" id="logitnormal" hidden>
-			<br>
-					
-			Mean: <input type = "text" name = "min" value="0" size="2">
-			<br>
-			Standard Deviation: <input type = "text" name = "max" value="1" size="2">
-		</div>
+        <div class="col-sm-4" id="logitnormal" ng-show="distData.dist==='logitnormal'">
+            <br>
 
-		<div class = "col-sm-5" id = "distGraphs">
-			<img src="http://vignette1.wikia.nocookie.net/universe-of-smash-bros-lawl/images/d/d2/Awesome_Face.png/revision/latest?cb=20150626002703" width="100px">
-		</div>
-	</div>
+            Mean: <input type = "text" name = "min" value="0" size="2" ng-model="distData.logitParams.mean">
+            <br>
+            Standard Deviation: <input type = "text" name = "max" value="1" size="2" ng-model="distData.logitParams.std">
+            <div class = "col-sm-5" id = "distGraphs"></div>
+        </div>
+        <br>
+
+        </div>
+    </div>
 </div> <!-- distSetting -->
