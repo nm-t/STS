@@ -74,6 +74,7 @@ var to2dArrayParam = function (xParam, yParam) {
     return R.map(function (gridPoint) {
         return [gridPoint[xParam], gridPoint[yParam]];
     });
+}
 
 var endOfTrials = function (grid, weights) {
     if (!weights) weights = R.repeat(1, grid.length);    
@@ -109,7 +110,22 @@ var endOfTrials = function (grid, weights) {
 
     });
 
-    return outputSeries;
+    // output looks a bit different
+
+    var prepared = [];
+    for (var i=0; i < total_stages - 1; i++) {
+        prepared.push({ 'key' : 'Stage ' + (i + 1),
+        'values' : outputSeries[i]
+        });
+    }
+    prepared.push({
+        'key' : 'Passed',
+        'values' : outputSeries[total_stages - 1]
+    });
+
+    //console.log(prepared);
+
+    return prepared;
 };
 
 var to2dArray = R.map(function (gridPoint) {
