@@ -28,7 +28,43 @@
 		<div class="row-fluid">
 			<div id="message"></div>
 			
+		<div class="col-sm-12" id="distSetting">
+			<h3> True rate distribution settings </h3>
+		    Uniform: 		<input type = "radio" name = "distType" value="uniform" checked="checked">&nbsp
+			Normal: 		<input type = "radio" name = "distType" value="normal">&nbsp
+			LogitNormal: 	<input type = "radio" name = "distType" value="logitnormal">
+			<br>
+			<div class="col-lg-12" id="uniform">
+				<div class="col-sm-4" id="uniform">
+					<br>
+					Min: <input type = "text" name = "min" value="0" size="2">
+					<br>
+					Max: <input type = "text" name = "max" value="1" size="2">
+				</div>
 
+				<div class="col-sm-4" id="normal" hidden>
+					<br>
+				
+					Mean: <input type = "text" name = "min" value="0" size="2">
+					<br>
+					Standard Deviation: <input type = "text" name = "max" value="1" size="2">
+				</div>
+			
+				<div class="col-sm-4" id="logitnormal" hidden>
+					<br>
+				
+					Mean: <input type = "text" name = "min" value="0" size="2">
+					<br>
+					Standard Deviation: <input type = "text" name = "max" value="1" size="2">
+				</div>
+
+				<div class = "col-sm-5" id = "distGraphs">
+					<img src="http://vignette1.wikia.nocookie.net/universe-of-smash-bros-lawl/images/d/d2/Awesome_Face.png/revision/latest?cb=20150626002703" width="100px">
+				</div>
+			</div>
+
+			
+			</div>
 		<div class="col-sm-12" id="trialString">
 			<form id="trialDesign" class="form-horizontal"
 			    data-fv-framework="bootstrap"
@@ -36,7 +72,18 @@
 			    data-fv-icon-invalid="glyphicon glyphicon-remove"
 			    data-fv-icon-validating="glyphicon glyphicon-refresh">
 
-				<h2>Trial string</h2>
+				<h2>Trial sequence</h2>
+
+				
+				<!-- Boxes for entering the true rate - not required
+				Lower bound for true rate:
+				<input type = "number" name = "trueRateLower" id="trueRateLower" step=".1" value="0">&nbsp
+				Upper bound for true rate:
+				<input type = "number" name = "trueRateUpper" id="trueRateUpper" step=".1" value="1">&nbsp
+				True rate step size:
+				<input type = "number" name = "trueRateStep" id="trueRateStep" step=".1" value="0.1">
+				<br><br> -->
+
 				<ul id="trialSim" class="list-inline"></ul>
 				<button id="start">Start</button>
 			</form>
