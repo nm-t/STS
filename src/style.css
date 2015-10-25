@@ -21,9 +21,11 @@ h4 {
 	padding: 0px 20px 20px 20px;
 }
 
-#distGraphs {
-	background-color: green;
+.graph {
+	/*background-color: green;*/
 	float: left;
+	margin-left: 0;
+	padding-bottom: 50px;
 }
 .stage {
 	float:left;

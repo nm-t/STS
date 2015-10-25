@@ -28,8 +28,9 @@
 		<p>A tool for simulating drug trials.</p>
 		<div class="btn-group" role="group" aria-label="...">
 		  <a class="btn btn-default active" role="button">Home</a>
-		  <a class="btn btn-default" href="splash.html"role="button">About</a>
-		  <a class="btn btn-default" href="index.html" role="button">Contact</a>
+		  <a class="btn btn-default" href="howto.html" role="button">How to use</a>
+		  <a class="btn btn-default" href="about.html"role="button">About</a>
+		  <a class="btn btn-default" href="contact.html" role="button">Contact</a>
 		</div>
 	</div>
 	
@@ -38,41 +39,8 @@
 			<div id="message">
 			</div>
 			
-			<div class="col-sm-12" id="distSetting">
-				<h3> True rate distribution settings </h3>
-			    Uniform: 		<input type = "radio" name = "distType" value="uniform" checked="checked">&nbsp
-				Normal: 		<input type = "radio" name = "distType" value="normal">&nbsp
-				LogitNormal: 	<input type = "radio" name = "distType" value="logitnormal">
-				<br>
-				<div class="col-lg-12" id="uniform">
-					<div class="col-sm-4" id="uniform">
-						<br>
-						Min: <input type = "text" name = "min" value="0" size="2">
-						<br>
-						Max: <input type = "text" name = "max" value="1" size="2">
-					</div>
-
-					<div class="col-sm-4" id="normal" hidden>
-						<br>
-					
-						Mean: <input type = "text" name = "min" value="0" size="2">
-						<br>
-						Standard Deviation: <input type = "text" name = "max" value="1" size="2">
-					</div>
-				
-					<div class="col-sm-4" id="logitnormal" hidden>
-						<br>
-					
-						Mean: <input type = "text" name = "min" value="0" size="2">
-						<br>
-						Standard Deviation: <input type = "text" name = "max" value="1" size="2">
-					</div>
-
-					<div class = "col-sm-5" id = "distGraphs">
-						<img src="http://vignette1.wikia.nocookie.net/universe-of-smash-bros-lawl/images/d/d2/Awesome_Face.png/revision/latest?cb=20150626002703" width="100px">
-					</div>
-				</div>
-			</div> <!-- distSetting -->
+    <weight-dist></weight-dist>
+			 <!-- distSetting -->
 			<div class="col-sm-12" id="trialString">
 				<form id="trialDesign" class="form-horizontal"
 				    data-fv-framework="bootstrap"
@@ -112,9 +80,15 @@
 			<div class="col-sm-12" id="output">
 				<h2>Output graphs</h2>
             <graphs></graphs>
-            <br>
-            <br>
+            <!-- <br> -->
+            <!-- <br> -->
             <trs-graph></trs-graph>
+
+            <!-- <br> -->
+            <!-- <br> -->
+            <trf-graph></trs-graph>
+            <!-- <br> -->
+
             <br>
             <br>
             <trf-graph></trf-graph>
@@ -122,6 +96,7 @@
             <br>
             <failed-stage-graph></failed-stage-graph>
             <br>
+
 
 				<div class="col-sm-12" id="output">
 					<h2>Output graphs</h2>

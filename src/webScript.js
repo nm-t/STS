@@ -39,7 +39,7 @@ $( document ).ready(function() {
     });
 
     
-    /*var trueRateValidation = function(){//Validation for the true rate input boxes
+    /*var trueRateValidation = function(){//Validation for the True response probability input boxes
     
         var range = $("#trueRateUpper").val() - $("#trueRateLower").val()
         if ($("#trueRateStep").val()>range){
@@ -123,16 +123,33 @@ $( document ).ready(function() {
 
 
 angular.module('sts')
+.directive('weightDist', function (graphData) {
+    return {
+        link: function (scope) {
+            scope.distData = graphData.distData;
+            console.log(scope.distData);
+
+        },
+        templateUrl: "html/weightdist.html"
+    };
+})
 .factory('graphData', function(stageStore) {
+
+    var calcGridData = function(points) {
+
+    var distData = { dist: 'uniform', uniformParams: {min: 0, max: 1}, logitParams: { mean: 0.4, std: 0.1 } };
     var calcGridData = function(points) {
         if (!points) points = 101;
         var rates = interpolateRates(0, 1, points);
         var grid = createGrid(stageStore.stages, rates);
-        var weights = sampleWeights(rates, 'logitnormal', {'mu' : 0.4, 'variance' : 0.1});
+
+        var weights = sampleWeights(rates, distData.dist, distData.dist === 'uniform' ? distData.uniformParams : distData.logitParams );
+
 
         return [grid, weights];
     };
     return {
+        distData: distData,
         calcTrGraphData: function () {
             var r = calcGridData();
             var grid = r[0];
@@ -175,7 +192,7 @@ angular.module('sts')
                 return '≥' + x;
             };
         },
-        template: '<div style="width:500px !important;height:350px !important;"><h4>Negative predictive function</h4><nvd3-line-chart data="trGraphData" width="430" height="350" forceX="[0, 1]" xAxisTickFormat="xFormat"  xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
+        template: '<div class="graph" style="width:500px !important;height:350px !important;"><h4>Negative predictive function<br><font size="2">(given that the trial stops early...)</font></h4><nvd3-line-chart data="trGraphData" width="430" height="350" forceX="[0, 1]" xAxisTickFormat="xFormat"  xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True response probability" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Posterior probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
 
     };
 })
@@ -193,7 +210,7 @@ angular.module('sts')
                 return '≥' + x;
             };
         },
-        template: '<div style="width:500px !important;height:350px !important;"><h4>Positive predictive function</h4><nvd3-line-chart data="trGraphData" width="430" height="350" forceX="[0, 1]" xAxisTickFormat="xFormat" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
+        template: '<div class="graph" style="width:500px !important;height:350px !important;"><h4>Positive predictive function<br><font size="2">(given that the trial is successful...)</font></h4><nvd3-line-chart data="trGraphData" width="430" height="350" forceX="[0, 1]" xAxisTickFormat="xFormat" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True response probability" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Posterior probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
 
     };
 })
@@ -211,7 +228,7 @@ angular.module('sts')
                 return '≥' + x;
             };
         },
-        template: '<div style="width:500px !important;height:350px !important;"><h4>Power function</h4><nvd3-line-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" xAxisTickFormat="xFormat" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
+        template: '<div class="graph" style="width:500px !important;height:350px !important;"><h4>Power function</h4><nvd3-line-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" xAxisTickFormat="xFormat" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True response probability" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Probability that trial is successful" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
 
     };
 })
