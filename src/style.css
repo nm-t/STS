@@ -1,15 +1,14 @@
-li.stage {
+.stage {
 	width : 280px;
 }
-li.stage .form-number {
+.stage .form-number {
 	margin-right: 0px;
 }
 .stage {
-	border-style:solid;
-	border-width:1px;
-	border-radius:100px;
-	margin: 0px 10px 5px 0px;
-	padding:0px;
+    background-color:#ddd;
+	margin: 10px;
+	padding:5px;
+    padding-left:10px;
 }
 h4 {
 	text-align:center;
@@ -21,7 +20,10 @@ h4 {
 	margin: 0px 0px 10px 0px;
 	padding: 0px 20px 20px 20px;
 }
+<<<<<<< HEAD
 #distGraphs {
 	background-color: green;
 	float: left;
 }
+=======
+>>>>>>> dcf909f06503378b0ca440bd2efdc826d1bf38aa
