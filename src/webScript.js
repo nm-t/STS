@@ -123,15 +123,28 @@ $( document ).ready(function() {
 
 
 angular.module('sts')
+.directive('weightDist', function (graphData) {
+    return {
+        link: function (scope) {
+            scope.distData = graphData.distData;
+            console.log(scope.distData);
+
+        },
+        templateUrl: "html/weightdist.html"
+    };
+})
 .factory('graphData', function(stageStore) {
+    var distData = { dist: 'uniform', uniformParams: {min: 0, max: 1}, logitParams: { mean: 0.4, std: 0.1 } };
     var calcGridData = function() {
         var rates = interpolateRates(0, 1, 101);
         var grid = createGrid(stageStore.stages, rates);
-        var weights = sampleWeights(rates, 'logitnormal', {'mean' : 0.4, 'std' : 0.1});
+
+        var weights = sampleWeights(rates, distData.dist, distData.dist === 'uniform' ? distData.uniformParams : distData.logitParams );
 
         return [grid, weights];
     };
     return {
+        distData: distData,
         calcTrGraphData: function () {
             var r = calcGridData();
             var grid = r[0];
