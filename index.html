@@ -20,15 +20,6 @@
     <script src="src/stages.js"></script>
 	<script type="text/javascript" src="src/webScript.js"></script>
 	<link href="src/nv.d3.min.css" rel="stylesheet">
-	<style type="text/css">
-	li.stage {
-		width : 280px;
-	}
-
-	li.stage .form-number {
-		margin-right: 0px;
-	}
-	</style>
 </head>
 
 <body ng-app="sts">
@@ -51,11 +42,10 @@
 			    data-fv-icon-validating="glyphicon glyphicon-refresh">
 
 				<h2>Trial string</h2>
-				<ul id="trialSim" class="list-inline">
+				<div id="trialSim" class="list-inline">
                     <stages></stages>
                 </ul>
                 <add-stage></add-stage>
-				<button id="start">Start</button>
 			</form>
 		</div>
 		
@@ -65,96 +55,7 @@
 			<div class="col-sm-12" id="output">
 				<h2>Output graphs</h2>
             <graphs></graphs>
-				<ul id="displayGraph" class="list-inline">
-	                <li class="graph"><svg id="trgraph" width="350" height="330"></svg></li>
-
-	                <li class="graph"><svg id="visualisation" width="350" height="330"></svg></li>
-
-	                <li class="graph"><svg id="trgivenfail" width="350" height="330"></svg></li>
-				</ul>
-
-
-		 		<script>
-				var drawGraph = function (data, graphLocation, trGivenSType) {
-				    $(graphLocation).html(''); //#trgraph, #visualisation, #trgivenfail
-					var firstData = R.last(data);
-					var lastData = R.head(data);
-					var trueRate = R.prop('trueRate');
-					var trGivenS  = R.prop(trGivenSType); //passFraction, trGivenS, trGivenF
-					var firstTrueRate = trueRate(firstData);
-					var lastTrueRate = trueRate(lastData);
-					var firstTrGivenS = trGivenS(firstData);
-					var lastTrGivenS = trGivenS(lastData);
-
-					var vis = d3.select(graphLocation),
-					    WIDTH = 350,
-					    HEIGHT = 330,
-					    MARGINS = {
-					        top: 20,
-					        right: 20,
-					        bottom: 50,
-					        left: 50
-					    },
-
-				    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([firstTrueRate,lastTrueRate]),
-				    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([lastTrGivenS, firstTrGivenS]),
-
-				    xAxis = d3.svg.axis()
-					    .scale(xScale),
-					  
-					yAxis = d3.svg.axis()
-					    .scale(yScale)
-		    			.orient("left");
-
-				    vis.append("svg:g")
-					    .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-					    .call(xAxis);
-				    vis.append("svg:g")
-					    .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-					    .call(yAxis);
-
-				    var lineGen = d3.svg.line()
-						.x(function(d) {
-						return xScale(d.trueRate);
-						})
-						.y(function(d) {
-						return yScale(d[trGivenSType]);
-						});
-
-					vis.append('svg:path')
-					  .attr('d', lineGen(data));
-
-					// Graph title
-					vis.append('text')
-                        .attr('transform', 'translate(200, 20)')
-				        .attr('text-anchor', 'middle')
-				        .text(graphLocation);
-
-					// x axis label
-                    vis.append('text')
-                        .attr('transform', 'translate(200, 320)')
-                        .style('text-anchor', 'middle')
-                        .text('True efficacy/toxicity');
-
-                    // y axis label
-                    vis.append('text')
-					    .attr('dy', '1em')
-					    .attr('transform', 'rotate(-90)')
-                        .style('text-anchor', 'end')
-					    .text('Probability');
-
-					var lineGen = d3.svg.line()
-					    .x(function(d) {
-					    	// TODO: change var name
-					        return xScale(d.year);
-					    })
-					    .y(function(d) {
-					    	// TODO: change var name
-					        return yScale(d.sale);
-					    })
-					    .interpolate("basis");
-				};
-		 		</script>
+            <br>
 		</div>
 	</div>
 
