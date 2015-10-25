@@ -1,16 +1,19 @@
 (function() {
-    var binomials = {};
-
 
     var runSeqTrial = function(stages, trueRate) {
+
+        // passed_previous and pass_current keeps the fraction of trials where i people were affected
+        // indexed by i. eg [3] is the probability that exactly 3 people were affected
+        // pass_previous keeps the numbers from the previous stage, pass_current is used
+        // to calculate the current stage
         var passed_previous = [1.0];
-        var pass_current = [];
+        var pass_current = [];  
         var previous_cutoff = 0;
         var failed_stage = [];
         var passed_stage = [];
 
 		stages.forEach(function(stage) {
-			// Initialise
+			// Initialise the 
 			for (var index=previous_cutoff; index < passed_previous.length + stage.numPeople; index++) {
 				pass_current[index] = 0.0;
 			}
@@ -24,7 +27,7 @@
                 }
             }
 
-            console.log('pass current ' + pass_current);
+            //console.log('pass current ' + pass_current);
             var failed_at_stage = 0.;
             for (var index=previous_cutoff; index < stage.passThreshold; index++) {
                 failed_at_stage += pass_current[index];
@@ -47,9 +50,9 @@
         for (var index=previous_cutoff; index < passed_previous.length; index++) {
             pass += passed_previous[index];
         }
-        console.log('pass ' + pass);
-        console.log('passed stage ' + passed_stage);
-        console.log('failed stage ' + failed_stage);
+        //console.log('pass ' + pass);
+        //console.log('passed stage ' + passed_stage);
+        //console.log('failed stage ' + failed_stage);
         return [pass, passed_stage, failed_stage];
     };
 
@@ -83,29 +86,56 @@
     		var rates = [min];
     		var gap = (max - min) / (count - 1);
     		var current = min;
-    		for (var i=1; i < count; i++) {
+    		for (var i=1; i < count - 1; i++) {
     			current += gap;
     			rates[rates.length] = current;
     		}
+            rates[rates.length] = max;
     		return rates;
     	}
     };
 
-    var cdfit = function(stages, rate) {
-    	var product = 1.0;
+    window.sampleWeights = function(rates, distribution_name, distribution_parameters) {
+        var get = function(object, key, default_value) {
+            if (key in object)
+                return object[key];
+            else
+                return default_value;
+        };
 
-    	var nominator = 0.;
-    	var denominator = 0.;
+        if (distribution_parameters === undefined)
+            distribution_parameters = {};
+        var weights = [];
 
-    	stages.forEach(function(stage, stage_index) {
-    		nominator = stage.passThreshold;
-    		denominator += stage.numPeople;
-    		console.log('cdf of ' + nominator + ', ' + denominator + ': ' + jStat.binomial.cdf(nominator, denominator, rate));
-    		product *= (1.0 - jStat.binomial.cdf(nominator, denominator, rate));
-    	});
-    	return product;
+        if (distribution_name == 'uniform') {
+            var min = get(distribution_parameters, 'min', 0.0);
+            var max = get(distribution_parameters, 'max', 1.0);
+
+            rates.forEach(function(rate) {
+                if (rate < min || rate > max) {
+                    // TODO: do we need to normalise this?
+                    weights[weights.length] = 0.0;  
+                } else {
+                    weights[weights.length] = 1.0;
+                }
+            });
+        } else if (distribution_name == 'logitnormal') {
+            var mean = get(distribution_parameters, 'mean', 0.5);
+            var std = get(distribution_parameters, 'std', 0.25);
+
+            var logit = function(z) {
+                return Math.exp(z) / (1.0 + Math.exp(z));
+            }
+
+            rates.forEach(function(rate) {
+                var p = jStat.normal.pdf(rate, mean, std);
+                weights[weights.length] = logit(p);
+            });
+        }
+
+        return weights;
     };
-	
+
 	/*
 	createGrid([{ 'numPeople' : 1, 'passThreshold' : 1}, 
 		{'numPeople' : 1, 'passThreshold' : 2},

@@ -6,6 +6,8 @@ $( document ).ready(function() {
         $("#message").html(fullErrorMessage);
     }
 
+
+
     var addStage = function() {
         $("#addrule").remove();
         var newStage = "<li class='stage'><h4>Stage " + stageNum + "</h4>" +'<div class="form-group">\
@@ -36,7 +38,29 @@ $( document ).ready(function() {
         addStage();    	
     });
 
+    
+    /*var trueRateValidation = function(){//Validation for the true rate input boxes
+    
+        var range = $("#trueRateUpper").val() - $("#trueRateLower").val()
+        if ($("#trueRateStep").val()>range){
+            console.log("invalid step");
+            return False
+        }
+        if ($("#trueRateUpper").val()>1 || $("#trueRateUpper").val()<$("#trueRateLower").val()){
+            console.log("upper out of range");
+            return False
+        }
+        if ($("#trueRateLower").val()>$("#trueRateUpper").val() || $("#trueRateLower").val()<0){
+            console.log("lower out of range");
+            return False
+        }
+        return True
+    } */
+
     $("#start").on('click',function(e){
+            //valides the rate boxes
+            //trueRateValidation()
+
     		//get values out of user input boxes
             var allFieldsOk = true;
             $(".people").each(function(index) {
@@ -76,12 +100,15 @@ $( document ).ready(function() {
     			var inputData = R.zip(peopleArray, ruleArray);
     			inputData = R.map(function (tuple) { return { numPeople: tuple[0], passThreshold: tuple[1] }; },inputData);
 				//at this point, we are ready to call createGrid on inputData
-				var grid = createGrid(inputData, interpolateRates(0, 1, 11));
+                var rates = interpolateRates(0, 1, 101);
+                var grid = createGrid(inputData, rates);
+                var weights = sampleWeights(rates, 'uniform', {'min' : 0.5});
+
 				//these three functions have optional parameter "weight[]"
 				//cumulateProb = ctr(grid);
-				var graphDataGivenTrue = ctrGivenS(grid);
-				var trGraphData = ctr(grid);
-				var trGivenFData = ctrGivenF(grid);
+				var graphDataGivenTrue = ctrGivenS(grid, weights);
+				var trGraphData = ctr(grid, weights);
+				var trGivenFData = ctrGivenF(grid, weights);
 
                 drawGraph(trGraphData, '#trgraph', 'passFraction');
 				drawGraph(graphDataGivenTrue, '#visualisation', 'trGivenS');
@@ -98,20 +125,30 @@ $( document ).ready(function() {
 angular.module('sts')
 .factory('graphData', function(stageStore) {
     var calcGridData = function() {
-        return createGrid(stageStore.stages, interpolateRates(0, 1, 11));
+        var rates = interpolateRates(0, 1, 101);
+        var grid = createGrid(stageStore.stages, rates);
+        var weights = sampleWeights(rates, 'logitnormal', {'mean' : 0.4, 'std' : 0.1});
+
+        return [grid, weights];
     };
     return {
         calcTrGraphData: function () {
-            var grid = calcGridData();
-            return [{ "key": 'Pass Fraction', values: to2dArray(ctr(grid)) }];
+            var r = calcGridData();
+            var grid = r[0];
+            var weights = r[1];
+            return [{ "key": 'Pass Fraction', values: to2dArray(ctr(grid, weights)) }];
         },
         calcTrGivenSGraphData: function () {
-            var grid = calcGridData();
-            return [{ "key": 'Pass Fraction', values: to2dArrayParam('trueRate', 'trGivenS')(ctrGivenS(grid)) }];
+            var r = calcGridData();
+            var grid = r[0];
+            var weights = r[1];
+            return [{ "key": 'Pass Fraction', values: to2dArrayParam('trueRate', 'trGivenS')(ctrGivenS(grid, weights)) }];
         },
         calcTrGivenFGraphData: function () {
-            var grid = calcGridData();
-            return [{ "key": 'Pass Fraction', values: to2dArrayParam('trueRate', 'trGivenF')(ctrGivenF(grid)) }];
+            var r = calcGridData();
+            var grid = r[0];
+            var weights = r[1];
+            return [{ "key": 'Pass Fraction', values: to2dArrayParam('trueRate', 'trGivenF')(ctrGivenF(grid, weights)) }];
         }
     };
 })
@@ -129,7 +166,7 @@ angular.module('sts')
                 return '≥' + x;
             };
         },
-        template: '<div style="width:500px !important;height:350px !important;"><h4>True rate given failure</h4><nvd3-line-chart data="trGraphData" width="430" height="350" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
+        template: '<div style="width:500px !important;height:350px !important;"><h4>Negative predictive function</h4><nvd3-line-chart data="trGraphData" width="430" height="350" forceX="[0, 1]" xAxisTickFormat="xFormat"  xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
 
     };
 })
@@ -147,7 +184,7 @@ angular.module('sts')
                 return '≥' + x;
             };
         },
-        template: '<div style="width:500px !important;height:350px !important;"><h4>True rate given success</h4><nvd3-line-chart data="trGraphData" width="430" height="350" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
+        template: '<div style="width:500px !important;height:350px !important;"><h4>Positive predictive function</h4><nvd3-line-chart data="trGraphData" width="430" height="350" forceX="[0, 1]" xAxisTickFormat="xFormat" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
 
     };
 })
@@ -165,7 +202,7 @@ angular.module('sts')
                 return '≥' + x;
             };
         },
-        template: '<div style="width:500px !important;height:350px !important;"><h4>True rate</h4><nvd3-line-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" xAxisTickFormat="xFormat" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
+        template: '<div style="width:500px !important;height:350px !important;"><h4>Power function</h4><nvd3-line-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" xAxisTickFormat="xFormat" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
 
     };
 });
