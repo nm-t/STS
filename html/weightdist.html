@@ -16,10 +16,10 @@
 
         <div class="col-sm-4" id="logitnormal" ng-show="distData.dist==='logitnormal'">
             <br>
-
-            Mean: <input type = "text" class="distInput" name = "min" value="0" size="2" ng-model="distData.logitParams.mean">
-            <br>
-            Standard Deviation: <input type = "text" class="distInput" name = "max" value="1" size="2" ng-model="distData.logitParams.std">
+			<ul class="list-unstyled">
+	            <li>Mean: <input type = "text" class="distInput" name = "min" value="0" size="2" ng-model="distData.logitParams.mean"></li>
+            	<li>Standard Deviation: <input type = "text" class="distInput" name = "max" value="1" size="2" ng-model="distData.logitParams.std"></li>
+			</ul>
             <div class = "col-sm-5" id = "distGraphs"></div>
         </div>
         <br>
