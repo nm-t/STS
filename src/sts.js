@@ -129,8 +129,8 @@ var endOfTrials = function (grid, weights) {
 };
 
 
-var endOfTrialsExact = function (grid, weights) {
-    if (!weights) weights = R.repeat(1, grid.length);    
+var endOfTrialsExact = function (grid) {
+
     var outputSeries = {};
 
     if (!grid) {
@@ -143,17 +143,13 @@ var endOfTrialsExact = function (grid, weights) {
     for (var i=0; i < total_stages; i++) {
         outputSeries[i] = [];
     }
-    var weightedRows = R.zip(grid, weights);
 
-    weightedRows.forEach(function(weightedRow){
-        var row = weightedRow[0];
-        var weight = weightedRow[1];
-
+    grid.forEach(function(row){
         var at_stage = [];
         row.stageFailed.forEach(function(failed, index) {
-            at_stage[index] = failed * weight;
+            at_stage[index] = failed;
         });
-        at_stage[total_stages-1] = row.passFraction * weight;
+        at_stage[total_stages-1] = row.passFraction;
         total_at_stage = at_stage.reduce(function(a,b) { return a+b; }, 0);
         for (var i=0; i < total_stages; i++) {
             outputSeries[i].push([row.trueRate, at_stage[i] / total_at_stage]);
