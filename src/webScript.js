@@ -123,30 +123,33 @@ $( document ).ready(function() {
 
 
 angular.module('sts')
-.directive('weightDist', function (graphData) {
+.directive('weightDist', function (graphData, stageStore) {
     return {
         link: function (scope) {
             scope.distData = graphData.distData;
-            console.log(scope.distData);
-
+            scope.$watch('distData', function () {
+                stageStore.refresh += 1;
+            }, true);
         },
         templateUrl: "html/weightdist.html"
     };
 })
 .factory('graphData', function(stageStore) {
 
+    var weights = [];
     var distData = { dist: 'uniform', uniformParams: {min: 0, max: 1}, logitParams: { mean: 0.4, std: 0.1 } };
     var calcGridData = function(points) {
         if (!points) points = 101;
         var rates = interpolateRates(0, 1, points);
         var grid = createGrid(stageStore.stages, rates);
 
-        var weights = sampleWeights(rates, distData.dist, distData.dist === 'uniform' ? distData.uniformParams : distData.logitParams );
+        weights = sampleWeights(rates, distData.dist, distData.dist === 'uniform' ? distData.uniformParams : distData.logitParams );
 
 
         return [grid, weights];
     };
     return {
+        weights: weights,
         distData: distData,
         calcTrGraphData: function () {
             var r = calcGridData();
@@ -236,6 +239,7 @@ angular.module('sts')
         link: function(scope) {
             scope.stageStore = stageStore;
             scope.trGraphData = [];
+            scope.graphData = graphData;
             scope.$watch('stageStore', function () {
                 scope.trGraphData = graphData.calcStageFailedGraphData();
             }, true);
