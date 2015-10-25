@@ -6,6 +6,8 @@ $( document ).ready(function() {
         $("#message").html(fullErrorMessage);
     }
 
+
+
     var addStage = function() {
         $("#addrule").remove();
         var newStage = "<li class='stage'><h4>Stage " + stageNum + "</h4>" +'<div class="form-group">\
@@ -36,7 +38,29 @@ $( document ).ready(function() {
         addStage();    	
     });
 
+    
+    /*var trueRateValidation = function(){//Validation for the true rate input boxes
+    
+        var range = $("#trueRateUpper").val() - $("#trueRateLower").val()
+        if ($("#trueRateStep").val()>range){
+            console.log("invalid step");
+            return False
+        }
+        if ($("#trueRateUpper").val()>1 || $("#trueRateUpper").val()<$("#trueRateLower").val()){
+            console.log("upper out of range");
+            return False
+        }
+        if ($("#trueRateLower").val()>$("#trueRateUpper").val() || $("#trueRateLower").val()<0){
+            console.log("lower out of range");
+            return False
+        }
+        return True
+    } */
+
     $("#start").on('click',function(e){
+            //valides the rate boxes
+            //trueRateValidation()
+
     		//get values out of user input boxes
             var allFieldsOk = true;
             $(".people").each(function(index) {
