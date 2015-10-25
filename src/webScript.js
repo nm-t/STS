@@ -244,7 +244,7 @@ angular.module('sts')
                 scope.trGraphData = graphData.calcStageFailedGraphData();
             }, true);
         },
-        template: '<div class="graph" style="width:500px !important;height:350px !important;"><h4>Distribution of end of trials across stages</h4><nvd3-multi-bar-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" xAxisTickFormat="xFormat" forceX="[0, 1]" xAxisTickValues="[0, 1]" xAxisLabel="True Rate" showLegend="true" margin="{left:40, top: 20, bottom: 40, right: 20}" yAxisLabel="Proportion" showXAxis="true" showYAxis="true" tooltips="true" stacked="true"></nvd3-multi-bar-chart></div>'
+        template: '<div class="graph" style="width:500px !important;height:350px !important;"><h4>Distribution of end stage across true response probability</h4><nvd3-multi-bar-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" forceX="[0, 1]" xAxisTickValues="[0, 1]" xAxisLabel="True Rate" showLegend="true" margin="{left:40, top: 20, bottom: 40, right: 20}" yAxisLabel="Proportion" showXAxis="true" showYAxis="true" tooltips="true" stacked="true"></nvd3-multi-bar-chart></div>'
 
     };
 });
