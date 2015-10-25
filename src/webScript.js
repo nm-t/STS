@@ -57,7 +57,7 @@ $( document ).ready(function() {
         return True
     } */
 
-    $("#start").on('click',function(e){
+    /*$("#start").on('click',function(e){
             //valides the rate boxes
             //trueRateValidation()
 
@@ -117,7 +117,7 @@ $( document ).ready(function() {
             e.preventDefault();
     });
 
-    addStage(); 
+    addStage(); */ 
 });
 
 
