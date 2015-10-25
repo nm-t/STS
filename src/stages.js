@@ -54,30 +54,30 @@ angular.module('sts', ['nvd3ChartDirectives'])
                 stageStore.removeStage(scope.stageNum - 1);
             };
             var validationFailed = function(newPeople){
-                if (!newPeople || isNaN(newPeople)){
-                    return false
-                }
+                
                 if (newPeople === parseInt(newPeople)){
                     return (newPeople<0);
                 }
-                return true
+                return true;
             }
 
             var thresholdValidationFailed = function(newThreshold){
-                if (!newThreshold || isNaN(newThreshold)){
+                
+                if (typeof(newThreshold)==="undefined"){
                     return false
                 }
+                
                 var totalPeople = 0
                 for (var i = 0; i<=scope.stageNum-1; i++){
                     totalPeople+=stageStore.stages[i].numPeople;
                 }
                 //console.log("tp",totalPeople,newThreshold)
 
-                return (newThreshold>totalPeople);
+                return (newThreshold>totalPeople || newThreshold<0);
             }
             scope.$watch('numPeople', function (newValue, oldValue) {
 
-                if (validationFailed(newValue)) scope.numPeople = oldValue;
+                if (validationFailed(newValue)) scope.numPeople = oldValue
                 else { scope.numPeople = parseInt(scope.numPeople);}
             });
             scope.$watch('passThreshold', function(newValue, oldValue) {
