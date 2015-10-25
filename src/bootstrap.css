@@ -15,7 +15,9 @@ body {
 
 footer {
     position:bottom;
-    padding-top: 25px;
+    bottom:0;
+    height:100px;
+    padding-top: 10px;
     width:100%;
     background: transparent;
 }
