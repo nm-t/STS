@@ -54,7 +54,7 @@ angular.module('sts', ['nvd3ChartDirectives'])
             };
             var validationFailed = function(newPeople){
                 if (!newPeople || isNaN(newPeople)){
-                    return true
+                    return false
                 }
                 if (newPeople === parseInt(newPeople)){
                     return (newPeople<0);
@@ -64,7 +64,7 @@ angular.module('sts', ['nvd3ChartDirectives'])
 
             var thresholdValidationFailed = function(newThreshold){
                 if (!newThreshold || isNaN(newThreshold)){
-                    return true
+                    return false
                 }
                 var totalPeople = 0
                 for (var i = 0; i<=scope.stageNum-1; i++){
