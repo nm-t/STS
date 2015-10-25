@@ -135,8 +135,6 @@ angular.module('sts')
 })
 .factory('graphData', function(stageStore) {
 
-    var calcGridData = function(points) {
-
     var distData = { dist: 'uniform', uniformParams: {min: 0, max: 1}, logitParams: { mean: 0.4, std: 0.1 } };
     var calcGridData = function(points) {
         if (!points) points = 101;
