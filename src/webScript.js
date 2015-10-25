@@ -1,5 +1,3 @@
-
-
 $( document ).ready(function() {
 	var stageNum = 1;
 
@@ -26,9 +24,7 @@ $( document ).ready(function() {
         </div></li>';
 
         
-        $("#trialSim").append(newStage);
         var newButton = "<li id='addrule'><input type='button' value='Add Stage'></li>";        
-        $("#trialSim").append(newButton);
         stageNum += 1;
 
         $("#addrule").on('click', function() {
@@ -83,7 +79,7 @@ $( document ).ready(function() {
 				var grid = createGrid(inputData, interpolateRates(0, 1, 11));
 				//these three functions have optional parameter "weight[]"
 				//cumulateProb = ctr(grid);
-				graphDataGivenTrue = ctrGivenS(grid);
+				var graphDataGivenTrue = ctrGivenS(grid);
 				var trGraphData = ctr(grid);
 				var trGivenFData = ctrGivenF(grid);
 
@@ -95,4 +91,41 @@ $( document ).ready(function() {
     });
 
     addStage(); 
+});
+
+
+
+angular.module('sts')
+.factory('graphData', function(stageStore) {
+    var calcGridData = function() {
+        return createGrid(stageStore.stages, interpolateRates(0, 1, 11));
+    };
+    return {
+        calcTrGraphData: function () {
+            var grid = calcGridData();
+            return [{ "key": 'Pass Fraction', values: to2dArray(ctr(grid)) }];
+        },
+        calcTrGivenSGraphData: function () {
+            var grid = calcGridData();
+            return ctrGivenS(grid);
+        },
+        calcTrGivenFGraphData: function () {
+            var grid = calcGridData();
+            return ctrGivenF(grid);
+        }
+    };
+})
+.directive('graphs', function(stageStore, graphData) {
+    return {
+        scope: {},
+        link: function(scope) {
+            scope.stageStore = stageStore;
+            scope.trGraphData = [];
+            scope.$watch('stageStore', function () {
+                scope.trGraphData = graphData.calcTrGraphData();
+            }, true);
+        },
+        template: '<div style="width:500px !important;height:350px !important;"><h4>True rate</h4><nvd3-line-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}"yAxisLabel="Pass Probability" showXAxis="true" showYAxis="true" tooltips="true"></nvd3-line-chart></div>'
+
+    };
 });

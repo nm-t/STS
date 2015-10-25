@@ -67,7 +67,7 @@ var ctrGivenF = function (grid, weights) {
 };
 
 var to2dArray = R.map(function (gridPoint) {
-    return [gridPoint.trGivenS, gridPoint.trueRate];
+    return [gridPoint.trueRate, gridPoint.passFraction];
 });
 
 var testData1 = [

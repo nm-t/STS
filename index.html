@@ -8,16 +8,30 @@
 	<link href="src/style.css" rel="stylesheet">
 	<script src="src/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="src/ramda.min.js"></script>
-	<script type="text/javascript" src="src/webScript.js"></script>
 	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="src/nv.d3.min.js"></script>
 	<script src="src/jstat.min.js"></script>
 	<script src="src/ramda.min.js"></script>
 	<script src="src/stage.js"></script>
 	<script src="src/sts.js"></script>
 	<script src="src/bootstrap.js"></script>
+    <script src="src/angular.min.js"></script>
+    <script src="src/ngd3.min.js"></script>
+    <script src="src/stages.js"></script>
+	<script type="text/javascript" src="src/webScript.js"></script>
+	<link href="src/nv.d3.min.css" rel="stylesheet">
+	<style type="text/css">
+	li.stage {
+		width : 280px;
+	}
+
+	li.stage .form-number {
+		margin-right: 0px;
+	}
+	</style>
 </head>
 
-<body>
+<body ng-app="sts">
 	<div class="jumbotron">
 		<h1>Sequential Trial Simulator</h1>
 		<p>A tool for simulating drug trials.</p>
@@ -37,15 +51,20 @@
 			    data-fv-icon-validating="glyphicon glyphicon-refresh">
 
 				<h2>Trial string</h2>
-				<ul id="trialSim" class="list-inline"></ul>
+				<ul id="trialSim" class="list-inline">
+                    <stages></stages>
+                </ul>
+                <add-stage></add-stage>
 				<button id="start">Start</button>
 			</form>
 		</div>
 		
 		<!-- Output graphs div -->
 		<div class="row-fluid">
+
 			<div class="col-sm-12" id="output">
 				<h2>Output graphs</h2>
+            <graphs></graphs>
 				<ul id="displayGraph" class="list-inline">
 	                <li class="graph"><svg id="trgraph" width="350" height="330"></svg></li>
 
@@ -53,6 +72,7 @@
 
 	                <li class="graph"><svg id="trgivenfail" width="350" height="330"></svg></li>
 				</ul>
+
 
 		 		<script>
 				var drawGraph = function (data, graphLocation, trGivenSType) {
