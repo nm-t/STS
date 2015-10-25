@@ -124,10 +124,11 @@ $( document ).ready(function() {
 
 angular.module('sts')
 .factory('graphData', function(stageStore) {
-    var calcGridData = function() {
-        var rates = interpolateRates(0, 1, 101);
+    var calcGridData = function(points) {
+        if (!points) points = 101;
+        var rates = interpolateRates(0, 1, points);
         var grid = createGrid(stageStore.stages, rates);
-        var weights = sampleWeights(rates, 'logitnormal', {'mean' : 0.4, 'std' : 0.1});
+        var weights = sampleWeights(rates, 'logitnormal', {'mu' : 0.4, 'variance' : 0.1});
 
         return [grid, weights];
     };
@@ -151,11 +152,11 @@ angular.module('sts')
             return [{ "key": 'Pass Fraction', values: to2dArrayParam('trueRate', 'trGivenF')(ctrGivenF(grid, weights)) }];
         },
         calcStageFailedGraphData: function() {
-            var r = calcGridData();
+            var r = calcGridData(51);
             var grid = r[0];
             var weights = r[1];
 
-            return endOfTrialsExact(grid, weights);            
+            return endOfTrialsExact(grid);            
         }
 
     };
@@ -224,7 +225,7 @@ angular.module('sts')
                 scope.trGraphData = graphData.calcStageFailedGraphData();
             }, true);
         },
-        template: '<div style="width:500px !important;height:350px !important;"><h4>Distribution of end of trials</h4><nvd3-multi-bar-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" xAxisTickFormat="xFormat" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" margin="{left:40, top: 20, bottom: 40, right: 20}" yAxisLabel="Proportion" showXAxis="true" showYAxis="true" tooltips="true" stacked="true"></nvd3-multi-bar-chart></div>'
+        template: '<div style="width:500px !important;height:350px !important;"><h4>Distribution of end of trials across stages</h4><nvd3-multi-bar-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" xAxisTickFormat="xFormat" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True Rate" showLegend="true" margin="{left:40, top: 20, bottom: 40, right: 20}" yAxisLabel="Proportion" showXAxis="true" showYAxis="true" tooltips="true" stacked="true"></nvd3-multi-bar-chart></div>'
 
     };
 });
