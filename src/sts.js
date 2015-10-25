@@ -73,6 +73,7 @@ var to2dArrayParam = function (xParam, yParam) {
     return R.map(function (gridPoint) {
         return [gridPoint[xParam], gridPoint[yParam]];
     });
+}
 
 var endOfTrials = function (grid, weights) {
     if (!weights) weights = R.repeat(1, grid.length);    
