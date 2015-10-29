@@ -73,7 +73,7 @@ angular.module('sts', ['nvd3ChartDirectives'])
                 }
                 //console.log("tp",totalPeople,newThreshold)
 
-                return (newThreshold>totalPeople);
+                return (newThreshold>totalPeople||newThreshold<0);
             }
             scope.$watch('numPeople', function (newValue, oldValue) {
 
