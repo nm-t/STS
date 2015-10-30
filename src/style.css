@@ -1,15 +1,16 @@
 .stage {
 	width : 260px;
-}
-.stage .form-number {
-	margin-right: 0px;
-}
-.stage {
     background-color:#ddd;
 	margin: 10px;
 	padding:5px;
     padding-left:10px;
+    float: left;
+
 }
+.stage .form-number {
+	margin-right: 0px;
+}
+
 h4 {
 	text-align:center;
 }
@@ -26,7 +27,5 @@ h4 {
 	float: left;
 	margin-left: 0;
 	padding-bottom: 50px;
-}
-.stage {
-	float:left;
+	margin-bottom: 30px;
 }
