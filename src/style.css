@@ -14,7 +14,8 @@
 h4 {
 	text-align:center;
 }
-.col-sm-12 {
+
+.bordered {
 	border-style:outset;
 	border-width:5px;
 	border-color:gray;
@@ -28,4 +29,16 @@ h4 {
 	margin-left: 0;
 	padding-bottom: 50px;
 	margin-bottom: 30px;
+}
+
+.model-selection {
+	margin-bottom: 10px;
+}
+
+.model-parameters li {
+	margin-bottom: 5px;
+}
+
+input.short-number {
+	width: 100px;
 }

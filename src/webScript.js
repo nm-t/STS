@@ -137,7 +137,7 @@ angular.module('sts')
 .factory('graphData', function(stageStore) {
 
     var weights = [];
-    var distData = { dist: 'uniform', uniformParams: {min: 0, max: 1}, logitParams: { mean: 0.4, std: 0.1 } };
+    var distData = { dist: 'uniform', uniformParams: {min: 0, max: 1}, logitParams: { mu: 0.5, sigma: 0.5 } };
     var calcGridData = function(points) {
         if (!points) points = 101;
         var rates = interpolateRates(0, 1, points);
@@ -233,7 +233,7 @@ angular.module('sts')
 
     };
 })
-/*.directive('failedStageGraph', function(stageStore, graphData) {
+.directive('failedStageGraph', function(stageStore, graphData) {
     return {
         scope: {},
         link: function(scope) {
@@ -244,8 +244,8 @@ angular.module('sts')
                 scope.trGraphData = graphData.calcStageFailedGraphData();
             }, true);
         },
-        template: '<div class="graph" style="width:500px !important;height:350px !important;"><h4>Distribution of end stage across true response probability</h4><nvd3-multi-bar-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" forceX="[0, 1]" xAxisTickValues="[0, 1]" xAxisLabel="True Rate" showLegend="true" margin="{left:40, top: 20, bottom: 40, right: 20}" yAxisLabel="Proportion" showXAxis="true" showYAxis="true" tooltips="true" stacked="true"></nvd3-multi-bar-chart></div>'
+        template: '<div class="graph" style="width:500px !important;height:350px !important;"><h4>Distribution of end stages across true response probability</h4><nvd3-multi-bar-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" forceX="[0, 1]" xAxisTickValues="[0, 1]" xAxisLabel="True Rate" showLegend="true" margin="{left:40, top: 20, bottom: 40, right: 20}" yAxisLabel="Proportion" showXAxis="true" showYAxis="true" tooltips="true" stacked="true"></nvd3-multi-bar-chart></div>'
 
     };
-});*/
+});
 
