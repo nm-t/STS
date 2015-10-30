@@ -120,19 +120,20 @@
                 }
             });
         } else if (distribution_name == 'logitnormal') {
-            //var mean = get(distribution_parameters, 'mean', 0.5);
-            var mu = get(distribution_parameters, 'mu', 0.5);
-            var variance = get(distribution_parameters, 'variance', 0.25);
+            var mu = get(distribution_parameters, 'mu', 0.0);
+            var sigma = get(distribution_parameters, 'sigma', 0.25);
 
 
             var logit = function(z) {
-                return Math.exp(z) / (1.0 + Math.exp(z));
+                return Math.log(z / (1.0 - z));
             }
-            var mean = Math.log(mu / (1.0 - mu));
-            var std = Math.sqrt(variance);
             rates.forEach(function(rate) {
-                var p = jStat.normal.pdf(rate, mean, std);
-                weights[weights.length] = logit(p);
+                if (rate == 0.0 || rate == 1.0) {
+                    weights.push(0.0);
+                } else {
+                    var p = jStat.normal.pdf(logit(rate), mu, sigma);
+                    weights.push(p / (rate * (1.0 - rate)));
+                }
             });
         }
 
