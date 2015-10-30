@@ -1,29 +1,44 @@
-<div class="col-sm-12" id="distSetting">
-    <h3> True rate distribution settings </h3>
-    Uniform: 		<input type = "radio" name = "distType" ng-model="distData.dist" value="uniform" checked="checked">&nbsp
-    LogitNormal: 	<input type = "radio" name = "distType" ng-model="distData.dist" value="logitnormal">
-    <br>
-    <div class="col-lg-12" id="uniform" ng-show="distData.dist==='uniform'">
-        <div class="col-sm-4" id="uniform">
-            <br>
-			<ul class="list-unstyled">
-            	<li>Min: <input type = "text" class="distInput" name = "min" value="0" size="2" ng-model="distData.uniformParams.min"></li>
-            	<li>Max: <input type = "text" class="distInput" name = "max" value="1" size="2" ng-model="distData.uniformParams.max"></li>
-            </ul>
-            <div class = "col-sm-5" id = "distGraphs"></div>
+<div class="col-sm-12 bordered" id="distSetting">
+    <div class="col-sm-4">
+        <div class="col-sm-12 model-selection">
+            <h3> True rate distribution settings</h3>
+            <div>
+                <label class="radio-inline" for="dist-uniform-radio"><input type="radio" name="distType" ng-model="distData.dist" value="uniform" checked="checked" id="dist-uniform-radio"> Uniform</label>                    
+                <label class="radio-inline" for="dist-logitnormal-radio"><input type="radio" name="distType" ng-model="distData.dist" value="logitnormal" id="dist-logitnormal-radio">LogitNormal</label>
+            </div>
+
+        </div>
+        <div class="col-sm-12 model-parameters" id="uniform" ng-show="distData.dist==='uniform'">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Minimum</label>
+                <div class="col-sm-8 form-number">
+                    <input type="number" class="form-control short-number" step="0.1" name="min" min="0" max="1" value="0" ng-model="distData.uniformParams.min" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Maximum</label>
+                <div class="col-sm-8 form-number">
+                    <input type="number" class="form-control short-number" step="0.1" name="max" min="0" max="1" value="1" ng-model="distData.uniformParams.max" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 model-parameters" id="logitnormal" ng-show="distData.dist==='logitnormal'">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Mu</label>
+                <div class="col-sm-8 form-number">
+                    <input type="number" class="form-control short-number" step="0.1" name="mu" value="0.5" ng-model="distData.logitParams.mu" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Sigma</label>
+                <div class="col-sm-8 form-number">
+                    <input type="number" class="form-control short-number" step="0.1" min="0.0000001" name="sigma" value="1" ng-model="distData.logitParams.sigma" />
+                </div>
+            </div>
         </div>
     </div>
-
-        <div class="col-sm-4" id="logitnormal" ng-show="distData.dist==='logitnormal'">
-            <br>
-			<ul class="list-unstyled">
-	            <li>Mean: <input type = "text" class="distInput" name = "min" value="0" size="2" ng-model="distData.logitParams.mean"></li>
-            	<li>Standard Deviation: <input type = "text" class="distInput" name = "max" value="1" size="2" ng-model="distData.logitParams.std"></li>
-			</ul>
-            <div class = "col-sm-5" id = "distGraphs"></div>
-        </div>
-        <br>
-
-        </div>
+    <div class="col-sm-8" id="dist-graph" style="width:500px !important;height:350px !important;">
+        <nvd3-line-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True response probability" yAxisLabel="Prior" showXAxis="true" yAxisTickFormat="yFormat" showYAxis="true" tooltips="true" margin="{left:80, top: 20, bottom: 40, right: 20}"></nvd3-line-chart>
     </div>
 </div> <!-- distSetting -->

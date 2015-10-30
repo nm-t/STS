@@ -36,13 +36,12 @@
 	</div>
 	
 	<div class="container-fluid">
-		<div class="row-fluid">
-			<div id="message">
-			</div>
+		 <div class="row-fluid">
+			<div id="message"></div> 
 			
-    <weight-dist></weight-dist>
-			 <!-- distSetting -->
-			<div class="col-sm-12" id="trialString">
+    		<weight-dist></weight-dist>
+			<!-- distSetting -->
+			<div class="col-sm-12 bordered" id="trialString">
 				<form id="trialDesign" class="form-horizontal"
 				    data-fv-framework="bootstrap"
 				    data-fv-icon-valid="glyphicon glyphicon-ok"
@@ -66,32 +65,21 @@
 
 					<h2>Trial string</h2>
 					<add-stage></add-stage>
-					<div id="trialSim" class="list-inline">
+					<div id="trialSim" >
 	                    <stages></stages>
 	                </div>   
-	                </ul>
-	                
-
 				</form>
 			</div>
 		
 		<!-- Output graphs div -->
 			<div class="row-fluid">
 
-			<div class="col-sm-12" id="output">
-				<h2>Output graphs</h2>
-            <graphs></graphs>
-            <!-- <br> -->
-            <!-- <br> -->
-            <trs-graph></trs-graph>
-
-
-            <br>
-            <br>
-            <trf-graph></trf-graph>
-            <failed-stage-graph></failed-stage-graph>
-            <br>
-
+				<div class="col-sm-12 bordered" id="output">
+            		<graphs></graphs>
+            		<trs-graph></trs-graph>
+            		<trf-graph></trf-graph>
+            		<failed-stage-graph></failed-stage-graph>
+				</div>
 			</div>
 		</div>
 	</div>

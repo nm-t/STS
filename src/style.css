@@ -1,19 +1,21 @@
 .stage {
 	width : 260px;
-}
-.stage .form-number {
-	margin-right: 0px;
-}
-.stage {
     background-color:#ddd;
 	margin: 10px;
 	padding:5px;
     padding-left:10px;
+    float: left;
+
 }
+.stage .form-number {
+	margin-right: 0px;
+}
+
 h4 {
 	text-align:center;
 }
-.col-sm-12 {
+
+.bordered {
 	border-style:outset;
 	border-width:5px;
 	border-color:gray;
@@ -26,7 +28,17 @@ h4 {
 	float: left;
 	margin-left: 0;
 	padding-bottom: 50px;
+	margin-bottom: 30px;
 }
-.stage {
-	float:left;
+
+.model-selection {
+	margin-bottom: 10px;
+}
+
+.model-parameters li {
+	margin-bottom: 5px;
+}
+
+input.short-number {
+	width: 100px;
 }

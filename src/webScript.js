@@ -123,13 +123,18 @@ $( document ).ready(function() {
 
 
 angular.module('sts')
-.directive('weightDist', function (graphData, stageStore) {
+.directive('weightDist', function (stageStore, graphData) {
     return {
         link: function (scope) {
             scope.distData = graphData.distData;
             scope.$watch('distData', function () {
                 stageStore.refresh += 1;
+                scope.trGraphData = graphData.calcTruePriorsData();
             }, true);
+            scope.yFormat = function(y) {
+                return y.toFixed(2);
+            };
+
         },
         templateUrl: "html/weightdist.html"
     };
@@ -137,43 +142,47 @@ angular.module('sts')
 .factory('graphData', function(stageStore) {
 
     var weights = [];
-    var distData = { dist: 'uniform', uniformParams: {min: 0, max: 1}, logitParams: { mean: 0.4, std: 0.1 } };
+    var distData = { dist: 'uniform', uniformParams: {min: 0, max: 1}, logitParams: { mu: 0.0, sigma: 0.5 } };
     var calcGridData = function(points) {
         if (!points) points = 101;
         var rates = interpolateRates(0, 1, points);
         var grid = createGrid(stageStore.stages, rates);
-
-        weights = sampleWeights(rates, distData.dist, distData.dist === 'uniform' ? distData.uniformParams : distData.logitParams );
-
-
-        return [grid, weights];
+        return grid;
+    };
+    var calcTruePriors = function(points) {
+        if (!points) points = 101;
+        var rates = interpolateRates(0, 1, points);
+        var weights = sampleWeights(rates, distData.dist, distData.dist === 'uniform' ? distData.uniformParams : distData.logitParams );
+        return weights;
     };
     return {
         weights: weights,
         distData: distData,
+        calcTruePriorsData: function() {
+            // This one's just for show
+            var points = 101;
+            var rates = interpolateRates(0, 1, points);
+            var weights = calcTruePriors(points);
+            var data = R.zip(rates, weights);
+            return [{ "key" : "Prior", "values" : data}]
+
+        },
         calcTrGraphData: function () {
-            var r = calcGridData();
-            var grid = r[0];
-            var weights = r[1];
-            return [{ "key": 'Pass Fraction', values: to2dArray(ctr(grid, weights)) }];
+            var grid = calcGridData();
+            return [{ "key": 'Pass Fraction', "values": to2dArray(ctr(grid)) }];
         },
         calcTrGivenSGraphData: function () {
-            var r = calcGridData();
-            var grid = r[0];
-            var weights = r[1];
-            return [{ "key": 'Pass Fraction', values: to2dArrayParam('trueRate', 'trGivenS')(ctrGivenS(grid, weights)) }];
+            var grid = calcGridData();
+            var weights = calcTruePriors();
+            return [{ "key": 'Pass Fraction', "values": to2dArrayParam('trueRate', 'trGivenS')(ctrGivenS(grid, weights)) }];
         },
         calcTrGivenFGraphData: function () {
-            var r = calcGridData();
-            var grid = r[0];
-            var weights = r[1];
-            return [{ "key": 'Pass Fraction', values: to2dArrayParam('trueRate', 'trGivenF')(ctrGivenF(grid, weights)) }];
+            var grid = calcGridData();
+            var weights = calcTruePriors();
+            return [{ "key": 'Pass Fraction', "values": to2dArrayParam('trueRate', 'trGivenF')(ctrGivenF(grid, weights)) }];
         },
         calcStageFailedGraphData: function() {
-            var r = calcGridData(51);
-            var grid = r[0];
-            var weights = r[1];
-
+            var grid = calcGridData();
             return endOfTrialsExact(grid);            
         }
 
@@ -244,7 +253,7 @@ angular.module('sts')
                 scope.trGraphData = graphData.calcStageFailedGraphData();
             }, true);
         },
-        template: '<div class="graph" style="width:500px !important;height:350px !important;"><h4>Distribution of end stage across true response probability</h4><nvd3-multi-bar-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" forceX="[0, 1]" xAxisTickValues="[0, 1]" xAxisLabel="True Rate" showLegend="true" margin="{left:40, top: 20, bottom: 40, right: 20}" yAxisLabel="Proportion" showXAxis="true" showYAxis="true" tooltips="true" stacked="true"></nvd3-multi-bar-chart></div>'
+        template: '<div class="graph" style="width:500px !important;height:350px !important;"><h4>Distribution of end stages across true response probability</h4><nvd3-multi-bar-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" forceX="[0, 1]" xAxisTickValues="[0, 1]" xAxisLabel="True Rate" showLegend="true" margin="{left:40, top: 20, bottom: 40, right: 20}" yAxisLabel="Proportion" showXAxis="true" showYAxis="true" tooltips="true" stacked="true"></nvd3-multi-bar-chart></div>'
 
     };
 });

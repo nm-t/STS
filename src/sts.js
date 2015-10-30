@@ -3,8 +3,7 @@ var round = function(x) {
 };
 
 // Assumes input is in strictly ascending order by true success rate
-var ctr = function(grid, weights) {
-    if (!weights) weights = R.repeat(1, grid.length);
+var ctr = function(grid) {
     var outputPairs = [];
     grid.forEach(function (row) {
         outputPairs.push( {
