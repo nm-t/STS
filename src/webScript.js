@@ -131,10 +131,6 @@ angular.module('sts')
                 stageStore.refresh += 1;
                 scope.trGraphData = graphData.calcTruePriorsData();
             }, true);
-            scope.yFormat = function(y) {
-                return y.toFixed(2);
-            };
-
         },
         templateUrl: "html/weightdist.html"
     };
