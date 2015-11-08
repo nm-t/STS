@@ -138,7 +138,13 @@ angular.module('sts')
 .factory('graphData', function(stageStore) {
 
     var weights = [];
-    var distData = { dist: 'uniform', uniformParams: {min: 0, max: 1}, logitParams: { mu: 0.0, sigma: 0.5 } };
+    var distData = { 
+        dist: 'uniform', 
+        uniformParams: {min: 0, max: 1}, 
+        logitParams: { mu: 0.0, sigma: 0.5 },
+        betaParams: { alpha: 2.0, beta: 2.0 }
+     };
+
     var calcGridData = function(points) {
         if (!points) points = 101;
         var rates = interpolateRates(0, 1, points);
@@ -148,7 +154,15 @@ angular.module('sts')
     var calcTruePriors = function(points) {
         if (!points) points = 101;
         var rates = interpolateRates(0, 1, points);
-        var weights = sampleWeights(rates, distData.dist, distData.dist === 'uniform' ? distData.uniformParams : distData.logitParams );
+        var params;
+        if (distData.dist === 'uniform') {
+            params = distData.uniformParams;
+        } else if (distData.dist === 'logitnormal') {
+            params = distData.logitParams;
+        } else if (distData.dist === 'beta') {
+            params = distData.betaParams;
+        }
+        var weights = sampleWeights(rates, distData.dist, params );
         return weights;
     };
     return {

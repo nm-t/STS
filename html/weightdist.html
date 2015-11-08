@@ -5,6 +5,9 @@
             <div>
                 <label class="radio-inline" for="dist-uniform-radio"><input type="radio" name="distType" ng-model="distData.dist" value="uniform" checked="checked" id="dist-uniform-radio"> Uniform</label>                    
                 <label class="radio-inline" for="dist-logitnormal-radio"><input type="radio" name="distType" ng-model="distData.dist" value="logitnormal" id="dist-logitnormal-radio">LogitNormal</label>
+
+                <label class="radio-inline" for="dist-beta-radio"><input type="radio" name="distType" ng-model="distData.dist" value="beta" id="dist-beta-radio">Beta</label>
+
             </div>
 
         </div>
@@ -25,18 +28,32 @@
 
         <div class="col-sm-12 model-parameters" id="logitnormal" ng-show="distData.dist==='logitnormal'">
             <div class="form-group">
-                <label class="col-sm-4 control-label">Mu</label>
+                <label class="col-sm-4 control-label">&mu;</label>
                 <div class="col-sm-8 form-number">
                     <input type="number" class="form-control short-number" step="0.1" name="mu" value="0.5" ng-model="distData.logitParams.mu" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-4 control-label">Sigma</label>
+                <label class="col-sm-4 control-label">&sigma;</label>
                 <div class="col-sm-8 form-number">
                     <input type="number" class="form-control short-number" step="0.1" min="0.0000001" name="sigma" value="1" ng-model="distData.logitParams.sigma" />
                 </div>
             </div>
         </div>
+        <div class="col-sm-12 model-parameters" id="beta" ng-show="distData.dist==='beta'">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">&alpha;</label>
+                <div class="col-sm-8 form-number">
+                    <input type="number" class="form-control short-number" min="0.000000001" step="0.1" name="alpha" value="2.0" ng-model="distData.betaParams.alpha" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">&beta;</label>
+                <div class="col-sm-8 form-number">
+                    <input type="number" class="form-control short-number" step="0.1" min="0.0000001" name="beta" value="2.0" ng-model="distData.betaParams.beta" />
+                </div>
+            </div>
+        </div>        
     </div>
     <div class="col-sm-8" id="dist-graph" style="width:500px !important;height:350px !important;">
         <nvd3-line-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" forceX="[0, 1]" xAxisTickValues="[0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]" xAxisLabel="True response probability" yAxisLabel="Prior" showXAxis="true" showYAxis="false" tooltips="true" margin="{left:80, top: 20, bottom: 40, right: 20}"></nvd3-line-chart>

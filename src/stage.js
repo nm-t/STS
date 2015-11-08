@@ -135,7 +135,16 @@
                     weights.push(p / (rate * (1.0 - rate)));
                 }
             });
+        } else if (distribution_name == 'beta') {
+            var alpha = get(distribution_parameters, 'alpha', 2.0);
+            var beta = get(distribution_parameters, 'beta', 2.0);
+            rates.forEach(function(rate) {
+                var p = jStat.beta.pdf(rate, alpha, beta);
+                weights.push(p);
+            });
+
         }
+
 
         return weights;
     };
