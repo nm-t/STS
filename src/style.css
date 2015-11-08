@@ -11,7 +11,7 @@
 	margin-right: 0px;
 }
 
-h4 {
+.stage h4, .graph h4 {
 	text-align:center;
 }
 
