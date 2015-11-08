@@ -38,7 +38,8 @@ var ctrGivenS = function (grid, weights) {
         sumTrGivenS += (row.passFraction * weight) / bayesDenom;
         outputPairs.push({ trGivenS: round(sumTrGivenS), trueRate: round(row.trueRate) });
     });
-    return outputPairs;
+    // reverse so that useInteractiveGuide works
+    return R.reverse(outputPairs);
 };
 
 var ctrGivenF = function (grid, weights) {
@@ -65,7 +66,8 @@ var ctrGivenF = function (grid, weights) {
         sumTrGivenS += ((1 - row.passFraction) * weight) / bayesDenom;
         outputPairs.push({ trGivenF: round(sumTrGivenS), trueRate: round(row.trueRate) });
     });
-    return outputPairs;
+    // reverse so that useInteractiveGuide works
+    return R.reverse(outputPairs);
 };
 
 var to2dArrayParam = function (xParam, yParam) {

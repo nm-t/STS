@@ -29,6 +29,14 @@
 	margin-left: 0;
 	padding-bottom: 50px;
 	margin-bottom: 30px;
+	width: 500px !important;
+	height: 350px !important;
+}
+
+#dist-graph {
+	width: 500px !important;
+	height: 350px !important;
+	
 }
 
 .model-selection {
