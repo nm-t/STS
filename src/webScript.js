@@ -264,7 +264,7 @@ angular.module('sts')
             }, true);
         },
         // Waiting on https://github.com/novus/nvd3/issues/1065 to add more ticks
-        template: '<div class="graph"><h4>Distribution of end stages across true response probability</h4><nvd3-multi-bar-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" forceY="[0, 1]"  forceX="[0, 1]" xAxisTickValues="[0, 1]" xAxisLabel="True Rate" showLegend="true" margin="{left:40, top: 20, bottom: 40, right: 20}" yAxisLabel="Proportion" showXAxis="true" showYAxis="true" stacked="true"></nvd3-multi-bar-chart></div>'
+        template: '<div class="graph"><h4>Distribution of end stages across true response probabilities</h4><nvd3-multi-bar-chart data="trGraphData" width="430" height="350" useInteractiveGuideLine="true" forceY="[0, 1]"  forceX="[0, 1]" xAxisTickValues="[0, 1]" xAxisLabel="True response probaility" showLegend="true" margin="{left:40, top: 20, bottom: 40, right: 20}" yAxisLabel="Proportion" showXAxis="true" showYAxis="true" stacked="true"></nvd3-multi-bar-chart></div>'
 
     };
 });
