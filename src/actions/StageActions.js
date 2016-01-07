@@ -1,6 +1,6 @@
 /* @flow */ 
 import { ADD_STAGE, UPDATE_STAGE, REMOVE_STAGE } from './ActionTypes';
-import Stage from '../classes/Stage';
+import Stage from '../types/Stage';
 import Action from './Action';
 
 export function addStage(): Action {

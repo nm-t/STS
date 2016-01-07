@@ -1,7 +1,7 @@
 /* @flow */
 import { ADD_STAGE, UPDATE_STAGE, REMOVE_STAGE } from '../actions/ActionTypes';
-import Stage from '../classes/Stage';
-import State from '../classes/State';
+import Stage from '../types/Stage';
+import State from '../types/State';
 import Action from '../actions/Action';
 import update from 'ramda/src/update';
 import remove from 'ramda/src/remove';

@@ -4,7 +4,7 @@ import NVD3Chart from 'react-nvd3';
 import NumberEditor from 'react-number-editor';
 import DebouncedNumberEditor from './DebouncedNumberEditor';
 import StageBar from './StageBar';
-import Stage from '../classes/Stage';
+import Stage from '../types/Stage';
 import Card from 'material-ui/lib/card/card';
 import CardActions from 'material-ui/lib/card/card-actions';
 import CardTitle from 'material-ui/lib/card/card-title';
