@@ -69,19 +69,19 @@ export class StageCard extends Component {
             <StageBar participants={participants} threshold={threshold} totalParticipants={totalParticipants} />
                 <DebouncedNumberEditor
                     step={1}
-                    onValueChange={this.participantsChange}
-                    value={participants}
-                    min={minParticipants}
-                    max={maxParticipants}
-                    label="Participants" />
-            </span>
-                <DebouncedNumberEditor
-                    step={1}
                     onValueChange={this.thresholdChange}
                     value={threshold}
                     min={minThreshold}
                     max={maxThreshold}
                     label="Threshold" />
+            </span>
+                <DebouncedNumberEditor
+                    step={1}
+                    onValueChange={this.participantsChange}
+                    value={participants}
+                    min={minParticipants}
+                    max={maxParticipants}
+                    label="Participants" />
             </CardText>
             <CardActions>
                 <FlatButton label="Remove" onClick={() => removeStage(index)} disabled={!removalAllowed}/>
