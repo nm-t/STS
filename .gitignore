@@ -1,6 +1,3 @@
-node_modules/
-splash.html
-testGraph.html
-data.csv
-data2.csv
-bower_components/
+.DS_Store
+node_modules
+npm-debug.log
