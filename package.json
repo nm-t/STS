@@ -38,7 +38,16 @@
     "webpack-hot-middleware": "^2.6.0"
   },
   "dependencies": {
+    "material-ui": "^0.14.1",
+    "ramda": "^0.19.1",
     "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react-dom": "^0.14.0",
+    "react-number-editor": "git+https://github.com/joashc/react-number-editor.git",
+    "react-nvd3": "^0.4.1",
+    "react-redux": "^4.0.6",
+    "react-tap-event-plugin": "^0.2.1",
+    "redux": "^3.0.5",
+    "redux-thunk": "^1.0.3",
+    "reselect": "^2.0.1"
   }
 }
