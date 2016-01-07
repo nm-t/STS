@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as StageActions from '../actions/StageActions';
+import Stages from '../components/Stages';
 
 class StsApp extends Component {
   // $FlowIssue
@@ -13,7 +14,9 @@ class StsApp extends Component {
 
   render(): any {
     const { stages, dispatch } = this.props;
-    return (<div>STS</div>);
+    return (
+        <Stages stages={stages} {...bindActionCreators(StageActions, dispatch)} />
+    );
   }
 }
 
