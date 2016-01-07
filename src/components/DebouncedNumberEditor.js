@@ -19,6 +19,10 @@ export default class DebouncedNumberEditor extends Component {
       step: PropTypes.number.isRequired,
   };
 
+  componentWillReceiveProps(nextProps: any) {
+    if (nextProps.value !== this.props.value) this.setState({value: nextProps.value});
+  };
+
   onLocalValueChange(val: string) {
     const newValue = parseInt(val);
     const {min, max} = this.props;

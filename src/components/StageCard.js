@@ -62,7 +62,7 @@ export class StageCard extends Component {
       } = this.props;
 
     return (
-        <Card style={{width: "20em"}}>
+        <Card style={{width: "20em", marginTop: "1em"}}>
             <CardTitle subtitle={`Stage ${index + 1}`}/>
             <CardText>
             <span style={{paddingRight: "5em"}}>

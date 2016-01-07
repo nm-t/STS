@@ -5,7 +5,7 @@ import Action from './Action';
 
 export function addStage(): Action {
     return {
-      type: ADD_STAGE 
+      type: ADD_STAGE
     };
 }
 
