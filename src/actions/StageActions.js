@@ -7,10 +7,11 @@ export function addStage(): Action {
     return new Action(ADD_STAGE);
 }
 
-export function updateStage(stage: Stage): Action {
+export function updateStage(index: number, stage: Stage): Action {
     return {
         type: UPDATE_STAGE,
-        stage: stage
+        stage: stage,
+        index: index
     };
 }
 

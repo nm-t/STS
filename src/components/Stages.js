@@ -7,21 +7,36 @@ export default class Stages extends Component {
   static propTypes = {
     updateStage: PropTypes.func.isRequired,
     stages: PropTypes.array.isRequired,
+    totalParticipants: PropTypes.number.isRequired
   };
 
   render(): any {
-    const { stages } = this.props;
+    const { stages, updateStage, totalParticipants } = this.props;
+    console.log(totalParticipants);
     return (
       <div>
-        {stages.map((stage, index) =>
-         (<StageCard
+        {stages.map((constrainedStage, index) => {
+         const {
+           stage,
+           minThreshold,
+           maxThreshold,
+           minParticipants,
+           maxParticipants
+         } = constrainedStage;
+         console.log(index, constrainedStage);
+         return (<StageCard
            key={index}
-           onParticipantsChange={() => {}}
+           index={index}
+           onParticipantsChange={updateStage}
            participants={stage.participants}
            threshold={stage.threshold}
            onThresholdChange={() => {}}
-           totalParticipants={100} />)
-        )}
+           minParticipants={minParticipants}
+           maxParticipants={maxParticipants}
+           minThreshold={minThreshold}
+           maxThreshold={maxThreshold}
+           totalParticipants={totalParticipants} />)
+        })}
       </div>
     );
   }

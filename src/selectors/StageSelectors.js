@@ -3,13 +3,13 @@ import { createSelector } from 'reselect';
 import aperture from 'ramda/src/aperture';
 import compose from 'ramda/src/compose';
 import head from 'ramda/src/head';
-import tail from 'ramda/src/tail';
+import last from 'ramda/src/last';
 import cond from 'ramda/src/cond';
 import of from 'ramda/src/of';
 import always from 'ramda/src/always';
 import curry from 'ramda/src/curry';
 
-const stagesSelector = state => state.stages;
+export const stagesSelector = (state: any): any => state.stage.stages;
 
 const middleConstraints = compose(
   (aperture) => {
@@ -40,7 +40,7 @@ const headConstraint = compose(
     return {
       stage: curr,
       minThreshold: 0,
-      minParticipants: 1,
+      minParticipants: curr.threshold < curr.participants ? curr.threshold : curr.participants,
       maxThreshold: curr.participants,
       maxParticipants: next.participants
     };
@@ -49,7 +49,7 @@ const headConstraint = compose(
   aperture(2)
 );
 
-const tailConstraint = compose(
+const lastConstraint = compose(
   (aperture) => {
     const [prev, curr] = aperture;
     const incThreshold = prev.threshold + 1;
@@ -61,20 +61,28 @@ const tailConstraint = compose(
       maxParticipants: curr.participants + 10
     };
   },
-  tail,
+  last,
   aperture(2)
 );
 
-const lengthIs = curry(
-  (len, xs) => (xs.length === len)
-);
+const lengthIs = curry((len, xs) => (xs.length === len));
 
-const constrainedStagesSelector = createSelector(
+const totalParticipantsSelector = state => {
+  return stagesSelector(state).reduce((acc, stage) => (stage.participants > acc ? stage.participants : acc), 0);
+}
+
+export const constrainedStagesSelector = createSelector(
   stagesSelector,
-  cond([
-    [lengthIs(0), always([])],
-    [lengthIs(1), compose(singletonConstraint, of)],
-    [lengthIs(2), xs => [headConstraint(xs), tailConstraint(xs)]],
-    [() => true, xs => [headConstraint(xs), middleConstraints(xs), tailConstraint(xs)]]
-  ])
+  totalParticipantsSelector,
+  (stages, totalParticipants) => {
+    return {
+      stages: cond([
+          [lengthIs(0), () => ([])],
+          [lengthIs(1), compose(singletonConstraint, of)],
+          [lengthIs(2), xs => [headConstraint(xs), lastConstraint(xs)]],
+          [() => true, xs => [headConstraint(xs), middleConstraints(xs), lastConstraint(xs)]]
+        ])(stages),
+      totalParticipants: totalParticipants
+    };
+  }
 );
