@@ -17,7 +17,7 @@ const middleConstraints = compose(
     const incThreshold = prev.threshold + 1;
     return {
       stage: curr,
-      minThreshold: incThreshold < curr.participants ? incThreshold : curr.participants,
+      minThreshold: incThreshold,
       minParticipants: prev.participants,
       maxThreshold: curr.participants,
       maxParticipants: next.participants
@@ -31,7 +31,7 @@ const singletonConstraint = stage => ({
   minThreshold: 0,
   minParticipants: 1,
   maxThreshold: stage.participants,
-  maxParticipants: stage.participants + 10
+  maxParticipants: Infinity
 });
 
 const headConstraint = compose(
@@ -40,8 +40,8 @@ const headConstraint = compose(
     return {
       stage: curr,
       minThreshold: 0,
-      minParticipants: curr.threshold < curr.participants ? curr.threshold : curr.participants,
-      maxThreshold: curr.participants,
+      minParticipants: curr.threshold,
+      maxThreshold: Math.min(curr.participants, next.threshold-1),
       maxParticipants: next.participants
     };
   },
@@ -55,10 +55,10 @@ const lastConstraint = compose(
     const incThreshold = prev.threshold + 1;
     return {
       stage: curr,
-      minThreshold: incThreshold < curr.participants ? incThreshold : curr.participants,
-      minParticipants: prev.participants,
+      minThreshold: incThreshold,
+      minParticipants: Math.max(prev.participants, curr.threshold),
       maxThreshold: curr.participants,
-      maxParticipants: curr.participants + 10
+      maxParticipants: Infinity
     };
   },
   last,
