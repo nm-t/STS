@@ -60,7 +60,6 @@ export class StageCard extends Component {
         removeStage,
         removalAllowed
       } = this.props;
-      console.log(this.props);
 
     return (
         <Card style={{width: "20em"}}>

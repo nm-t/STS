@@ -19,7 +19,7 @@ const middleConstraints = compose(
     return {
       stage: curr,
       minThreshold: incThreshold,
-      minParticipants: prev.participants,
+      minParticipants: Math.max(prev.participants, curr.threshold),
       maxThreshold: curr.participants,
       maxParticipants: next.participants
     };

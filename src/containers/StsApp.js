@@ -16,7 +16,6 @@ class StsApp extends Component {
 
   render(): any {
     const { stages, dispatch, totalParticipants, removalAllowed } = this.props;
-    console.log(this.props);
     return (
         <Stages stages={stages} removalAllowed={removalAllowed} totalParticipants={totalParticipants} {...bindActionCreators(StageActions, dispatch)} />
     );
