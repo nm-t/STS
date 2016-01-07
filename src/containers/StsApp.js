@@ -10,13 +10,15 @@ class StsApp extends Component {
   // $FlowIssue
   static propTypes = {
     stages: PropTypes.array.isRequired,
-    totalParticipants: PropTypes.number.isRequired
+    totalParticipants: PropTypes.number.isRequired,
+    removalAllowed: PropTypes.bool.isRequired
   };
 
   render(): any {
-    const { stages, dispatch, totalParticipants } = this.props;
+    const { stages, dispatch, totalParticipants, removalAllowed } = this.props;
+    console.log(this.props);
     return (
-        <Stages stages={stages} totalParticipants={totalParticipants} {...bindActionCreators(StageActions, dispatch)} />
+        <Stages stages={stages} removalAllowed={removalAllowed} totalParticipants={totalParticipants} {...bindActionCreators(StageActions, dispatch)} />
     );
   }
 }

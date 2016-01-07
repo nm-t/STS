@@ -20,30 +20,31 @@ export class StageCard extends Component {
     }
     // $FlowIssue
     static propTypes = {
-        onParticipantsChange: PropTypes.func.isRequired,
+        updateStage: PropTypes.func.isRequired,
+        removeStage: PropTypes.func.isRequired,
         participants: PropTypes.number.isRequired,
-        onThresholdChange: PropTypes.func.isRequired,
         threshold: PropTypes.number.isRequired,
         totalParticipants: PropTypes.number.isRequired,
         minThreshold: PropTypes.number.isRequired,
         maxThreshold: PropTypes.number.isRequired,
         minParticipants: PropTypes.number.isRequired,
         maxParticipants: PropTypes.number.isRequired,
-        index: PropTypes.number.isRequired
+        index: PropTypes.number.isRequired,
+        removalAllowed: PropTypes.bool.isRequired
     };
 
   participantsChange(participantStr: string): any {
-    const { minParticipants, maxParticipants, onParticipantsChange, threshold, index } = this.props;
+    const { minParticipants, maxParticipants, updateStage, threshold, index } = this.props;
     const participantNum = parseInt(participantStr);
     if (participantNum < minParticipants || participantNum > maxParticipants) return;
-    setTimeout(() => onParticipantsChange(index, new Stage(participantNum, threshold)), 10);
+    setTimeout(() => updateStage(index, new Stage(participantNum, threshold)), 10);
   }
 
   thresholdChange(thresholdStr: string): any {
-    const { minThreshold, maxThreshold, onParticipantsChange, participants, index } = this.props;
+    const { minThreshold, maxThreshold, updateStage, participants, index } = this.props;
     const thresholdNum = parseInt(thresholdStr);
     if (thresholdNum < minThreshold || thresholdNum > maxThreshold) return;
-    setTimeout(() => onParticipantsChange(index, new Stage(participants, thresholdNum)), 10);
+    setTimeout(() => updateStage(index, new Stage(participants, thresholdNum)), 10);
   }
 
   render() {
@@ -54,11 +55,16 @@ export class StageCard extends Component {
         minParticipants,
         maxParticipants,
         minThreshold,
-        maxThreshold
+        maxThreshold,
+        index,
+        removeStage,
+        removalAllowed
       } = this.props;
+      console.log(this.props);
+
     return (
         <Card style={{width: "20em"}}>
-            <CardTitle subtitle="Stage 1"/>
+            <CardTitle subtitle={`Stage ${index + 1}`}/>
             <CardText>
             <span style={{paddingRight: "5em"}}>
             <StageBar participants={participants} threshold={threshold} totalParticipants={totalParticipants} />
@@ -79,7 +85,7 @@ export class StageCard extends Component {
                     label="Threshold" />
             </CardText>
             <CardActions>
-                <FlatButton label="Remove" />
+                <FlatButton label="Remove" onClick={() => removeStage(index)} disabled={!removalAllowed}/>
             </CardActions>
         </Card>
     );

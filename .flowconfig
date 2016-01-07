@@ -1,6 +1,8 @@
 [ignore]
 .*/node_modules/fbjs.*
 .*/node_modules/webpack.*
+.*/nsts/react-number-editor/.*
+.*/node_modules/react-number-editor/node_modules*
 
 [include]
 

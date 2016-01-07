@@ -3,7 +3,7 @@ import React, {Component, PropTypes } from 'react';
 import NumberEditor from 'react-number-editor';
 
 export default class DebouncedNumberEditor extends Component {
-  constructor(props) {
+  constructor(props: any){
     super(props);
     this.state = { value: props.value, debouncing: false };
     this.onLocalValueChange = this.onLocalValueChange.bind(this);

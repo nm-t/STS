@@ -4,7 +4,9 @@ import Stage from '../classes/Stage';
 import Action from './Action';
 
 export function addStage(): Action {
-    return new Action(ADD_STAGE);
+    return {
+      type: ADD_STAGE 
+    };
 }
 
 export function updateStage(index: number, stage: Stage): Action {
@@ -15,9 +17,9 @@ export function updateStage(index: number, stage: Stage): Action {
     };
 }
 
-export function removeStage(stageNumber: number): Action {
+export function removeStage(index: number): Action {
     return {
         type: REMOVE_STAGE,
-        stageNumber: stageNumber
+        index: index
     };
 }

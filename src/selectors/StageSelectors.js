@@ -7,12 +7,13 @@ import last from 'ramda/src/last';
 import cond from 'ramda/src/cond';
 import of from 'ramda/src/of';
 import always from 'ramda/src/always';
+import map from 'ramda/src/map';
 import curry from 'ramda/src/curry';
 
 export const stagesSelector = (state: any): any => state.stage.stages;
 
 const middleConstraints = compose(
-  (aperture) => {
+  map((aperture) => {
     const [prev, curr, next] = aperture;
     const incThreshold = prev.threshold + 1;
     return {
@@ -22,17 +23,20 @@ const middleConstraints = compose(
       maxThreshold: curr.participants,
       maxParticipants: next.participants
     };
-  },
+  }),
   aperture(3)
 );
 
-const singletonConstraint = stage => ({
-  stage: stage,
-  minThreshold: 0,
-  minParticipants: 1,
-  maxThreshold: stage.participants,
-  maxParticipants: Infinity
-});
+const singletonConstraint = compose(
+  stage => ({
+    stage: stage,
+    minThreshold: 0,
+    minParticipants: 1,
+    maxThreshold: stage.participants,
+    maxParticipants: Infinity
+  }),
+  head
+);
 
 const headConstraint = compose(
   (aperture) => {
@@ -68,8 +72,10 @@ const lastConstraint = compose(
 const lengthIs = curry((len, xs) => (xs.length === len));
 
 const totalParticipantsSelector = state => {
-  return stagesSelector(state).reduce((acc, stage) => (stage.participants > acc ? stage.participants : acc), 0);
+  return stagesSelector(state).reduce((acc, stage) => Math.max(acc, stage.participants), 0);
 }
+
+const log = (x) => { console.log(x); return x; };
 
 export const constrainedStagesSelector = createSelector(
   stagesSelector,
@@ -78,11 +84,12 @@ export const constrainedStagesSelector = createSelector(
     return {
       stages: cond([
           [lengthIs(0), () => ([])],
-          [lengthIs(1), compose(singletonConstraint, of)],
+          [lengthIs(1), compose(of, singletonConstraint)],
           [lengthIs(2), xs => [headConstraint(xs), lastConstraint(xs)]],
-          [() => true, xs => [headConstraint(xs), middleConstraints(xs), lastConstraint(xs)]]
+          [() => true, xs => [headConstraint(xs), ...middleConstraints(xs), lastConstraint(xs)]]
         ])(stages),
-      totalParticipants: totalParticipants
+      totalParticipants: totalParticipants,
+      removalAllowed: stages.length > 1
     };
   }
 );

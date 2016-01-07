@@ -4,17 +4,26 @@ import Stage from '../classes/Stage';
 import State from '../classes/State';
 import Action from '../actions/Action';
 import update from 'ramda/src/update';
+import remove from 'ramda/src/remove';
+import last from 'ramda/src/last';
 
-const initialState = new State([new Stage(10, 5), new Stage(20, 15)]);
+const initialState = new State([new Stage(10, 5), new Stage(20, 15), new Stage(30, 22)]);
 
 export default function stageReducers(state = initialState, action: Action): State {
    switch(action.type) {
+     case ADD_STAGE:
+       const lastStage = last(state.stages);
+       const newThreshold = lastStage.threshold + 1;
+       const newStage = new Stage(Math.max(lastStage.participants, newThreshold), newThreshold);
+       return new State([...state.stages, newStage]);
      case UPDATE_STAGE:
        const {stage} = action;
-       const newStage = stage.participants < stage.threshold ? new Stage(stage.participants, stage.participants) : stage;
-       return new State(update(action.index, newStage, state.stages));
+       const updatedStage = stage.participants < stage.threshold ? new Stage(stage.participants, stage.participants) : stage;
+       return new State(update(action.index, updatedStage, state.stages));
+     case REMOVE_STAGE:
+       const {index} = action;
+       return new State(remove(index, 1, state.stages));
      default:
-       console.log(action);
        return state;
    }
 }
