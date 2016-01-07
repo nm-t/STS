@@ -23,7 +23,6 @@ export default class DebouncedNumberEditor extends Component {
     const newValue = parseInt(val);
     const {min, max} = this.props;
     if (newValue === this.state.value) return;
-    console.log(newValue, min, max, "FDSFDSFSFDS");
     if (newValue < min) return;
     if (newValue > max) return;
     this.setState({value: newValue});

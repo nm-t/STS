@@ -16,6 +16,7 @@ export class StageCard extends Component {
     constructor() {
       super();
       this.participantsChange = this.participantsChange.bind(this);
+      this.thresholdChange = this.thresholdChange.bind(this);
     }
     // $FlowIssue
     static propTypes = {
@@ -31,21 +32,29 @@ export class StageCard extends Component {
         index: PropTypes.number.isRequired
     };
 
-  participantsChange(participantNum: string): any {
+  participantsChange(participantStr: string): any {
     const { minParticipants, maxParticipants, onParticipantsChange, threshold, index } = this.props;
+    const participantNum = parseInt(participantStr);
     if (participantNum < minParticipants || participantNum > maxParticipants) return;
-    setTimeout(() => { onParticipantsChange(index, new Stage(parseInt(participantNum), threshold)); }, 10);
+    setTimeout(() => onParticipantsChange(index, new Stage(participantNum, threshold)), 10);
+  }
+
+  thresholdChange(thresholdStr: string): any {
+    const { minThreshold, maxThreshold, onParticipantsChange, participants, index } = this.props;
+    const thresholdNum = parseInt(thresholdStr);
+    if (thresholdNum < minThreshold || thresholdNum > maxThreshold) return;
+    setTimeout(() => onParticipantsChange(index, new Stage(participants, thresholdNum)), 10);
   }
 
   render() {
       const {
         threshold,
         participants,
-        onParticipantsChange,
-        onThresholdChange,
         totalParticipants,
         minParticipants,
-        maxParticipants
+        maxParticipants,
+        minThreshold,
+        maxThreshold
       } = this.props;
     return (
         <Card style={{width: "20em"}}>
@@ -61,13 +70,12 @@ export class StageCard extends Component {
                     max={maxParticipants}
                     label="Participants" />
             </span>
-                <NumberEditor
+                <DebouncedNumberEditor
                     step={1}
-                    onValueChange={onThresholdChange}
+                    onValueChange={this.thresholdChange}
                     value={threshold}
-                    min={0}
-                    max={participants}
-                    style={{width: "2.5em", textAlign: "center"}}
+                    min={minThreshold}
+                    max={maxThreshold}
                     label="Threshold" />
             </CardText>
             <CardActions>

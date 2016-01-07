@@ -12,7 +12,6 @@ export default class Stages extends Component {
 
   render(): any {
     const { stages, updateStage, totalParticipants } = this.props;
-    console.log(totalParticipants);
     return (
       <div>
         {stages.map((constrainedStage, index) => {
@@ -23,7 +22,6 @@ export default class Stages extends Component {
            minParticipants,
            maxParticipants
          } = constrainedStage;
-         console.log(index, constrainedStage);
          return (<StageCard
            key={index}
            index={index}
