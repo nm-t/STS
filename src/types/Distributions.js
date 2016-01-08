@@ -1,37 +1,47 @@
 /* @flow */
 
-export class Uniform {
-  constructor(min: number, max: number) {
+export class DistParamDefinition {
+  constructor(definition: any) {
+    const {
+      paramProp,
+      displayName,
+      defaultVal,
+      precision,
+      min,
+      max,
+      constrainMaxParam,
+      constrainMinParam
+    } = definition;
+    this.paramProp = paramProp;
+    this.displayName = displayName;
+    this.precision = precision;
     this.min = min;
     this.max = max;
-    this.type = "uniform";
-  }
+    this.constrainMinParam = constrainMinParam;
+    this.constrainMaxParam = constrainMaxParam;
+    this.defaultVal = defaultVal;
+  };
 
-  type: string;
+  paramProp: string;
+  displayName: string;
+  precision: number;
   min: number;
   max: number;
+  defaultVal: number;
+  constrainMaxParam: string;
+  constrainMinParam: string;
 }
 
-export class LogitNormal {
-  constructor(mu: number, sigma: number) {
-    this.mu = mu;
-    this.sigma = sigma;
-    this.type = "logitNormal";
+export class Distribution {
+  constructor(type: string, paramDefs: Array<DistParamDefinition>) {
+    this.type = type;
+    this.paramDefinitions = paramDefs;
+    paramDefs.forEach(paramDef => {
+      // $FlowIssue: https://github.com/facebook/flow/issues/103
+      this[paramDef.paramProp] = paramDef.defaultVal;
+    });
   }
 
+  paramDefinitions: Array<DistParamDefinition>;
   type: string;
-  mu: number;
-  sigma: number;
-}
-
-export class Beta {
-  constructor(alpha: number, beta: number) {
-    this.alpha = alpha;
-    this.beta = beta;
-    this.type = "beta";
-  }
-
-  type: string;
-  alpha: number;
-  beta: number;
 }
