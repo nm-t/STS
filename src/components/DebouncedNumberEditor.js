@@ -17,6 +17,7 @@ export default class DebouncedNumberEditor extends Component {
       max: PropTypes.number.isRequired,
       label: PropTypes.string.isRequired,
       step: PropTypes.number.isRequired,
+      decimals: PropTypes.number
   };
 
   componentWillReceiveProps(nextProps: any) {
@@ -24,7 +25,7 @@ export default class DebouncedNumberEditor extends Component {
   };
 
   onLocalValueChange(val: string) {
-    const newValue = parseInt(val);
+    const newValue = parseFloat(val);
     const {min, max} = this.props;
     if (newValue === this.state.value) return;
     if (newValue < min) return;
@@ -39,7 +40,7 @@ export default class DebouncedNumberEditor extends Component {
   }
 
   render(): any {
-    const { onValueChange, min, max, label, step } = this.props;
+    const { decimals, onValueChange, min, max, label, step } = this.props;
     return (<NumberEditor
               step={step}
               onValueChange={this.onLocalValueChange}
@@ -48,6 +49,7 @@ export default class DebouncedNumberEditor extends Component {
               max={max}
               style={{width: "2.5em"}}
               label={label}
+              decimals={decimals}
            />);
   }
 
