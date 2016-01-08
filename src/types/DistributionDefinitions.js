@@ -1,5 +1,7 @@
 /* @flow */
 import { DistParamDefinition, Distribution } from './Distributions';
+import { curry } from 'ramda';
+import { jStat } from 'jstat';
 
 export class Uniform extends Distribution {
   constructor() {
@@ -23,10 +25,10 @@ export class Uniform extends Distribution {
         defaultVal: 1
       })
     ],
-    (val) => {
-      if (val < this.min || val > this.max) return 0.0;
+    curry((dist, rate) => {
+      if (rate < dist.min || rate > dist.max) return 0.0;
       return 1.0;
-    });
+    }));
   }
 
   min: number;
@@ -52,7 +54,11 @@ export class LogitNormal extends Distribution {
         max: Infinity,
         defaultVal: 0.5
       })
-    ]);
+    ],
+    curry((dist, rate) => {
+      const logit =  Math.log(rate, (1.0 - rate));
+      return jStat.normal.pdf(logit, dist.mu, dist.sigma);
+    }));
   }
 
   mu: number;
@@ -78,7 +84,8 @@ export class Beta extends Distribution {
         max: Infinity,
         defaultVal: 2
       })
-    ]);
+    ],
+    curry((dist, rate) => (jStat.beta.pdf(rate, dist.alpha, dist.beta))));
   }
 
   alpha: number;

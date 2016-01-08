@@ -16,12 +16,11 @@ export default class Distributions extends Component {
     resetDistribution: PropTypes.func.isRequired,
     distributions: PropTypes.array.isRequired,
     distributionNames: PropTypes.array.isRequired,
-    currentDistribution: PropTypes.string.isRequired
+    currentDistribution: PropTypes.object.isRequired
   };
 
   render(): any {
     const { distributions, currentDistribution, updateDistribution } = this.props;
-    const current = find(compose(equals(currentDistribution), prop("type")), distributions);
 
     return (
       <Card style={{ width: "20em", margin: "1em" }}>
@@ -31,14 +30,14 @@ export default class Distributions extends Component {
             </Tab>
         ))}
         </Tabs>
-        <CardTitle subtitle={`${current.type} Distribution`}/>
+        <CardTitle subtitle={`${currentDistribution.type} Distribution`}/>
         <CardText>
-          {current.paramDefinitions.map(def => (
+          {currentDistribution.paramDefinitions.map(def => (
             <DistributionParameter
               paramDefinition={def}
-              distribution={current}
+              distribution={currentDistribution}
               updateDistribution={updateDistribution}
-              key={`${current.type}:${def.paramProp}`}
+              key={`${currentDistribution.type}:${def.paramProp}`}
             />))
           }
         </CardText>

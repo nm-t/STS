@@ -10,7 +10,7 @@ class DistributionContainer extends Component {
   // $FlowIssue
   static propTypes = {
     distributionNames: PropTypes.array.isRequired,
-    currentDistribution: PropTypes.string.isRequired,
+    currentDistribution: PropTypes.object.isRequired,
     distributions: PropTypes.array.isRequired,
   };
 

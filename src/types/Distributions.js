@@ -33,17 +33,17 @@ export class DistParamDefinition {
 }
 
 export class Distribution {
-  constructor(type: string, paramDefs: Array<DistParamDefinition>, sampleFunc: (val: number) => number) {
+  constructor(type: string, paramDefs: Array<DistParamDefinition>, sampleFunc: (dist: Distribution, val: number) => number) {
     this.type = type;
     this.paramDefinitions = paramDefs;
+    this.sampleFunc = sampleFunc;
     paramDefs.forEach(paramDef => {
       // $FlowIssue: https://github.com/facebook/flow/issues/103
       this[paramDef.paramProp] = paramDef.defaultVal;
     });
-    this.sampleFunc = sampleFunc.bind(this);
   }
 
   paramDefinitions: Array<DistParamDefinition>;
   type: string;
-  sampleFunc: (val: number) => number;
+  sampleFunc: (dist: Distribution, val: number) => number;
 }
