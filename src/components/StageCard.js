@@ -1,7 +1,6 @@
 /* @flow */
 import React, {Component, PropTypes } from 'react';
 import NVD3Chart from 'react-nvd3';
-import NumberEditor from 'react-number-editor';
 import DebouncedNumberEditor from './DebouncedNumberEditor';
 import StageBar from './StageBar';
 import Stage from '../types/Stage';
@@ -37,14 +36,14 @@ export class StageCard extends Component {
     const { minParticipants, maxParticipants, updateStage, threshold, index } = this.props;
     const participantNum = parseInt(participantStr);
     if (participantNum < minParticipants || participantNum > maxParticipants) return;
-    setTimeout(() => updateStage(index, new Stage(participantNum, threshold)), 10);
+    updateStage(index, new Stage(participantNum, threshold));
   }
 
   thresholdChange(thresholdStr: string): any {
     const { minThreshold, maxThreshold, updateStage, participants, index } = this.props;
     const thresholdNum = parseInt(thresholdStr);
     if (thresholdNum < minThreshold || thresholdNum > maxThreshold) return;
-    setTimeout(() => updateStage(index, new Stage(participants, thresholdNum)), 10);
+    updateStage(index, new Stage(participants, thresholdNum));
   }
 
   render() {

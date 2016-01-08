@@ -1,18 +1,22 @@
 /* @flow */
 import { UPDATE_DISTRIBUTION, RESET_DISTRIBUTION } from '../actions/ActionTypes';
-import { Uniform, LogitNormal, Beta }  from '../types/Distributions';
+import { Uniform, LogitNormal, Beta }  from '../types/DistributionDefinitions';
 import Action from '../actions/Action';
-import { propEq, find, assoc, compose, head, update, remove, last, reduce, head } from 'ramda';
+import { propEq, find, assoc, compose, update, remove, last, reduce, head } from 'ramda';
 
-const distributions = [new Uniform(0, 1), new LogitNormal(0, 0.5), new Beta(2, 2)]
+const distributions = [
+  new Uniform(),
+  new LogitNormal(),
+  new Beta()
+];
 
 const initialState = reduce(
   (state, dist) => { state[dist.type] = dist; return state; },
-  { currentDist: head(distributions) },
+  { currentDist: head(distributions).type },
   distributions
 );
 
-export default function stageReducers(state = initialState, action: Action): any {
+export default function priorDistReducers(state = initialState, action: Action): any {
    switch(action.type) {
      case UPDATE_DISTRIBUTION:
        const { distribution } = action;

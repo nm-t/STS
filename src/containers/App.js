@@ -1,11 +1,13 @@
 /* @flow */
 
 import React, { Component } from 'react';
-import StsApp from './StsApp';
+import StageContainer from './StageContainer';
+import DistributionContainer from './DistributionContainer';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import * as reducers from '../reducers';
+import AppBar from 'material-ui/lib/app-bar';
 
 const finalCreateStore = compose(
   applyMiddleware(thunk)
@@ -25,8 +27,12 @@ export default class App extends Component {
   render(): any {
     return (
       <div>
+      <AppBar title="Sequential Trial Simulator" />
         <Provider store={store}>
-          <StsApp />
+          <DistributionContainer />
+        </Provider>
+        <Provider store={store}>
+          <StageContainer />
         </Provider>
       </div>
     );

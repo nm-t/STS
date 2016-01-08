@@ -6,7 +6,7 @@ import Stages from '../components/Stages';
 import * as StageActions from '../actions/StageActions';
 import { constrainedStagesSelector } from '../selectors/StageSelectors';
 
-class StsApp extends Component {
+class StageContainer extends Component {
   // $FlowIssue
   static propTypes = {
     stages: PropTypes.array.isRequired,
@@ -17,9 +17,9 @@ class StsApp extends Component {
   render(): any {
     const { stages, dispatch, totalParticipants, removalAllowed } = this.props;
     return (
-        <Stages stages={stages} removalAllowed={removalAllowed} totalParticipants={totalParticipants} {...bindActionCreators(StageActions, dispatch)} />
+        <Stages {...this.props} {...bindActionCreators(StageActions, dispatch)} />
     );
   }
 }
 
-export default connect(constrainedStagesSelector)(StsApp);
+export default connect(constrainedStagesSelector)(StageContainer);
