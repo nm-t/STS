@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import StageContainer from './StageContainer';
+import GraphContainer from './GraphContainer';
 import DistributionContainer from './DistributionContainer';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
@@ -33,6 +34,9 @@ export default class App extends Component {
         </Provider>
         <Provider store={store}>
           <StageContainer />
+        </Provider>
+        <Provider store={store}>
+          <GraphContainer />
         </Provider>
       </div>
     );
