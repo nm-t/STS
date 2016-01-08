@@ -22,7 +22,11 @@ export class Uniform extends Distribution {
         constrainMinParam: 'min',
         defaultVal: 1
       })
-    ]);
+    ],
+    (val) => {
+      if (val < this.min || val > this.max) return 0.0;
+      return 1.0;
+    });
   }
 
   min: number;
