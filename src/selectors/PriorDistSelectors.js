@@ -1,10 +1,10 @@
 /* @flow */
 import { createSelector } from 'reselect';
-import R, {isNil, find, equals, prop, reject, compose, values, map} from 'ramda';
+import R, {isNil, find, path, equals, prop, reject, compose, values, map} from 'ramda';
 
 const log = R.curry((message, x) => { console.log(message, x); return x });
 
-const distStateSelector = prop('propDist');
+const distStateSelector = path(['propDist', 'present']);
 
 const distsSelector = compose(
   reject(compose(equals("String"), R.type)),
