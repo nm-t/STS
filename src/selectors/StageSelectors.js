@@ -9,8 +9,23 @@ import of from 'ramda/src/of';
 import always from 'ramda/src/always';
 import map from 'ramda/src/map';
 import curry from 'ramda/src/curry';
+import { mapAccum } from 'ramda';
 
 export const stagesSelector = (state: any): any => state.stage.stages;
+
+export const nonCumulativeStagesSelector = createSelector(
+  stagesSelector,
+  compose(last, mapAccum(
+    (prevParticipants, stage) => ([
+      stage.participants,
+      {
+        participants: stage.participants - prevParticipants,
+        threshold: stage.threshold 
+      }
+    ]),
+    0
+  ))
+);
 
 const middleConstraints = compose(
   map((aperture) => {
@@ -30,7 +45,7 @@ const middleConstraints = compose(
 const singletonConstraint = compose(
   stage => ({
     stage: stage,
-    minThreshold: 0,
+    minThreshold: 1,
     minParticipants: 1,
     maxThreshold: stage.participants,
     maxParticipants: Infinity
@@ -43,7 +58,7 @@ const headConstraint = compose(
     const [curr, next] = aperture;
     return {
       stage: curr,
-      minThreshold: 0,
+      minThreshold: 1,
       minParticipants: curr.threshold,
       maxThreshold: Math.min(curr.participants, next.threshold-1),
       maxParticipants: next.participants
