@@ -25,7 +25,6 @@ const setQuality = q => {
 };
 
 const log = (x) => { console.log(x); return x; };
-console.log(setQuality(30));
 
 // Hardcoding this for now, can make this configurable in future.
 export const trueRates = setQuality(100);
