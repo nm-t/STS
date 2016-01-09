@@ -1,10 +1,9 @@
 /* @flow */
 import { createSelector } from 'reselect';
-import { compose, map, curry, range } from 'ramda';
-import { jStat } from 'jstat';
+import { scan, add, compose, map, curry, range } from 'ramda';
 import { distributionStateSelector } from './PriorDistSelectors';
 
-const interpolateRates = function(min, max, count) {
+const interpolateRates = function(min: number, max: number, count: number): Array<number> {
   if (count == 0) return [];
   if (count == 1) return [max];
   let rates = [min];
@@ -20,11 +19,17 @@ const interpolateRates = function(min, max, count) {
 
 const log = (x) => { console.log(x); return x; };
 
+// Hardcoding this for now, can make this configurable in future.
+export const trueRates = interpolateRates(0, 1, 70);
+
+export function round(x: number): number { return (Math.ceil(x * 1000) / 1000) };
+
+export const cumulative = scan(add, 0.0);
+
 export const weightsSelector = createSelector(
   distributionStateSelector,
   distState => {
     const { currentDistribution: dist } = distState;
-    const weights = map(dist.sampleFunc(dist), interpolateRates(0, 1, 101));
-    return {weights: weights};
+    return map(dist.sampleFunc(dist), trueRates);
   }
 );

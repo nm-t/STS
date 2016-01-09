@@ -7,7 +7,7 @@ import update from 'ramda/src/update';
 import remove from 'ramda/src/remove';
 import last from 'ramda/src/last';
 
-const initialState = new State([new Stage(10, 5), new Stage(20, 15), new Stage(30, 22)]);
+const initialState = new State([new Stage(5, 2), new Stage(10, 4), new Stage(20, 12)]);
 
 export default function stageReducers(state = initialState, action: Action): State {
    switch(action.type) {
