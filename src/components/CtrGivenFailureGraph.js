@@ -2,7 +2,7 @@
 import React, {Component, PropTypes} from 'react';
 import { map, reverse } from 'ramda';
 import { round } from '../selectors/WeightSelectors';
-import LineGraph from './LineGraph';
+import CardLineGraph from './CardLineGraph';
 
 export default class CtrGivenFailureGraph extends Component {
   // $FlowIssue
@@ -19,11 +19,12 @@ export default class CtrGivenFailureGraph extends Component {
     const passRateData = map(this.toXYPair, ctrGivenFailure);
 
     return (
-      <LineGraph
+      <CardLineGraph
         data={passRateData}
-        title="Cumulative True Rate Given Failure"
-        xLabel="True Rate"
-        yLabel="True Response Probability"
+        title="Negative predictive function"
+        xLabel="True response probability"
+        yLabel="Posterior probability"
+        subtitle="Given trial stops early..."
        />
     );
   }

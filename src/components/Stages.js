@@ -40,8 +40,8 @@ export default class Stages extends Component {
            removalAllowed={removalAllowed}
            totalParticipants={totalParticipants} />)
         })}
-        <div style={{marginTop: "2em"}}>
-          <RaisedButton label="Add" onClick={addStage}/>
+        <div style={{marginTop: "2em", margin: "1em"}} width="100%">
+          <RaisedButton primary={true} label="Add Stage" onClick={addStage} style={{width: "98%"}}/>
         </div>
       </div>
     );

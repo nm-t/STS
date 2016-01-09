@@ -56,7 +56,8 @@ export class LogitNormal extends Distribution {
       })
     ],
     curry((dist, rate) => {
-      const logit =  Math.log(rate, (1.0 - rate));
+      if (rate === 0.0 || rate === 1.0) return 0.0;
+      const logit = Math.log(rate / (1.0 - rate));
       return jStat.normal.pdf(logit, dist.mu, dist.sigma);
     }));
   }

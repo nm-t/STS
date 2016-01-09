@@ -1,6 +1,6 @@
 /* @flow */
 import { createSelector } from 'reselect';
-import { scan, add, compose, map, curry, range } from 'ramda';
+import { zipWith, assoc, scan, add, compose, map, curry, range } from 'ramda';
 import { distributionStateSelector } from './PriorDistSelectors';
 
 const interpolateRates = function(min: number, max: number, count: number): Array<number> {
@@ -20,7 +20,7 @@ const interpolateRates = function(min: number, max: number, count: number): Arra
 const log = (x) => { console.log(x); return x; };
 
 // Hardcoding this for now, can make this configurable in future.
-export const trueRates = interpolateRates(0, 1, 70);
+export const trueRates = interpolateRates(0, 1, 30);
 
 export function round(x: number): number { return (Math.ceil(x * 1000) / 1000) };
 
@@ -31,5 +31,18 @@ export const weightsSelector = createSelector(
   distState => {
     const { currentDistribution: dist } = distState;
     return map(dist.sampleFunc(dist), trueRates);
+  }
+);
+
+export const distributionWeightsSelector = createSelector(
+  distributionStateSelector,
+  weightsSelector,
+  (distState, weights) => {
+    const weightsData = zipWith(
+      (weight, trueRate) => ({x: trueRate, y: weight}),
+      weights,
+      trueRates
+    );
+    return assoc("weights", weightsData, distState);
   }
 );

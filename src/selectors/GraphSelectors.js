@@ -62,7 +62,7 @@ const runSeqTrial = curry((stages, trueRate) => {
   for (let index=previous_cutoff; index < passed_previous.length; index++) {
     pass += passed_previous[index];
   }
-  return { passRate: pass, passRateByStage: passed_stage, failRateByStage: failed_stage, trueRate: trueRate };
+  return { passRate: pass, responsesPerStage: passed_stage, failRateByStage: failed_stage, trueRate: trueRate };
 });
 
 export const graphDataSelector = createSelector(

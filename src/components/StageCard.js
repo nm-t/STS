@@ -61,11 +61,13 @@ export class StageCard extends Component {
       } = this.props;
 
     return (
-        <Card style={{width: "20em", marginTop: "1em"}}>
+        <Card style={{width: "90%", margin: "1em"}}>
             <CardTitle subtitle={`Stage ${index + 1}`}/>
             <CardText>
+            <span style={{WebkitTransform: "translate(-500px,0px)"}}>
+              <StageBar participants={participants} threshold={threshold} totalParticipants={totalParticipants} />
+            </span>
             <span style={{paddingRight: "5em"}}>
-            <StageBar participants={participants} threshold={threshold} totalParticipants={totalParticipants} />
                 <DebouncedNumberEditor
                     step={1}
                     onValueChange={this.thresholdChange}

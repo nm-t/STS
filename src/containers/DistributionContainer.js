@@ -4,7 +4,7 @@ import { bindActionCreators, mapStateToProps } from 'redux';
 import { connect } from 'react-redux';
 import Distributions from '../components/Distributions';
 import * as PriorDistActions from '../actions/PriorDistActions';
-import { distributionStateSelector } from '../selectors/PriorDistSelectors';
+import { distributionWeightsSelector } from '../selectors/WeightSelectors';
 
 class DistributionContainer extends Component {
   // $FlowIssue
@@ -22,4 +22,4 @@ class DistributionContainer extends Component {
   }
 }
 
-export default connect(distributionStateSelector)(DistributionContainer);
+export default connect(distributionWeightsSelector)(DistributionContainer);

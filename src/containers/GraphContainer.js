@@ -18,10 +18,16 @@ class GraphContainer extends Component {
   render(): any {
     const { dispatch, ctrGraphData, ctrGivenSuccess, ctrGivenFailure } = this.props;
     return (
-        <div style={{height: "500px", width: "500px"}}>
-          <PassRateGraph ctrGraphData={ctrGraphData} />
-          <CtrGivenSuccessGraph ctrGivenSuccess={ctrGivenSuccess} />
-          <CtrGivenFailureGraph ctrGivenFailure={ctrGivenFailure} />
+        <div className="pure-g">
+          <div className="pure-u-1 pure-u-xl-1-2">
+            <PassRateGraph ctrGraphData={ctrGraphData}/>
+          </div>
+          <div className="pure-u-1 pure-u-xl-1-2">
+            <CtrGivenSuccessGraph ctrGivenSuccess={ctrGivenSuccess} />
+          </div>
+          <div className="pure-u-1 pure-u-xl-1-2">
+            <CtrGivenFailureGraph ctrGivenFailure={ctrGivenFailure} />
+          </div>
         </div>
     );
   }

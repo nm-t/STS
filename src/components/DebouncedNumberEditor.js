@@ -1,6 +1,7 @@
 /* @flow */
 import React, {Component, PropTypes } from 'react';
 import NumberEditor from 'react-number-editor';
+import { assoc } from 'ramda'
 
 export default class DebouncedNumberEditor extends Component {
   constructor(props: any){
@@ -40,14 +41,14 @@ export default class DebouncedNumberEditor extends Component {
   }
 
   render(): any {
-    const { decimals, onValueChange, min, max, label, step } = this.props;
+    const { style, decimals, onValueChange, min, max, label, step } = this.props;
     return (<NumberEditor
               step={step}
               onValueChange={this.onLocalValueChange}
               value={this.state.value}
               min={min}
               max={max}
-              style={{width: "2.5em"}}
+              style={assoc("width", "2.5em", style)}
               label={label}
               decimals={decimals}
            />);

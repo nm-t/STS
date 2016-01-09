@@ -42,6 +42,7 @@ export default class DistributionParameter extends Component {
           value={parameterVal}
           label={displayName}
           onValueChange={this.parameterChange}
+          style={{marginRight:"1em"}}
         />
     );
   }
