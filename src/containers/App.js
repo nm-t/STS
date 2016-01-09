@@ -1,6 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react';
+import { ActionCreators } from 'redux-undo';
 import StageContainer from './StageContainer';
 import GraphContainer from './GraphContainer';
 import DistributionContainer from './DistributionContainer';
@@ -10,11 +11,14 @@ import { Provider } from 'react-redux';
 import * as reducers from '../reducers';
 import AppBar from 'material-ui/lib/app-bar';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
+import ToolbarButtons from '../components/ToolbarButtons';
 import StsTheme from '../theme';
 
 const finalCreateStore = compose(
   applyMiddleware(thunk)
 )(createStore);
+
+console.log(reducers);
 
 const reducer = combineReducers(reducers);
 const store = finalCreateStore(reducer);
@@ -27,7 +31,6 @@ if (module.hot) {
 }
 
 export default class App extends Component {
-  // $FlowIssue
   static childContextTypes = {
     muiTheme: React.PropTypes.object,
   };
@@ -41,7 +44,7 @@ export default class App extends Component {
   render(): any {
     return (
       <div>
-        <AppBar title="Sequential Trial Simulator" />
+        <AppBar title="Sequential Trial Simulator" iconElementRight={<ToolbarButtons undoAction={() => store.dispatch(ActionCreators.undo())} redoAction={() => store.dispatch(ActionCreators.redo())}/>}/>
         <div className="pure-g">
           <div className="pure-u-1 pure-u-md-1-2 pure-u-lg-2-5 pure-u-xl-1-5">
             <Provider store={store}>

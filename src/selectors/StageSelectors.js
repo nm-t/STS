@@ -11,7 +11,7 @@ import map from 'ramda/src/map';
 import curry from 'ramda/src/curry';
 import { mapAccum } from 'ramda';
 
-export const stagesSelector = (state: any): any => state.stage.stages;
+export const stagesSelector = (state: any): any => state.stage.present.stages;
 
 export const nonCumulativeStagesSelector = createSelector(
   stagesSelector,
