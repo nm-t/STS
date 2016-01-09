@@ -36,8 +36,8 @@ export default class FailRatesByStageGraph extends Component {
           y="failRate"
           xAxis={{
             axisLabel: "True response probability",
-            tickFormat: x => {
-              if (!contains(x, [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1])) return '';
+            tickFormat: (x, isAxis) => {
+              if (!contains(x, [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]) && isAxis) return '';
               if (x === 1) return x;
               return `≥${x}`;
             },
