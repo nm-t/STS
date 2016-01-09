@@ -50,7 +50,7 @@ export class LogitNormal extends Distribution {
         paramProp: 'sigma',
         displayName: 'σ',
         precision: 2,
-        min: -Infinity,
+        min: 0.01,
         max: Infinity,
         defaultVal: 0.5
       })
@@ -58,7 +58,8 @@ export class LogitNormal extends Distribution {
     curry((dist, rate) => {
       if (rate === 0.0 || rate === 1.0) return 0.0;
       const logit = Math.log(rate / (1.0 - rate));
-      return jStat.normal.pdf(logit, dist.mu, dist.sigma);
+      const p = jStat.normal.pdf(logit, dist.mu, dist.sigma);
+      return p / (rate * (1.0 - rate));
     }));
   }
 

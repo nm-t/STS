@@ -9,6 +9,8 @@ import Tab from 'material-ui/lib/tabs/tab';
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardText from 'material-ui/lib/card/card-text';
+import CardActions from 'material-ui/lib/card/card-actions';
+import FlatButton from 'material-ui/lib/flat-button';
 
 export default class Distributions extends Component {
   // $FlowIssue
@@ -21,7 +23,7 @@ export default class Distributions extends Component {
   };
 
   render(): any {
-    const { weights, distributions, currentDistribution, updateDistribution } = this.props;
+    const { resetDistribution, weights, distributions, currentDistribution, updateDistribution } = this.props;
     const distGraphData = [ { values: weights, key: "Weighting", color: "#2196F3" } ];
 
     return (
@@ -36,16 +38,17 @@ export default class Distributions extends Component {
           subtitle={`${currentDistribution.type} Prior Distribution`}
           actAsExpander={true}
           showExpandableButton={true}
-          style={{marginBottom: "3em" }}
         >
-           <div>{currentDistribution.paramDefinitions.map(def => (
-            <DistributionParameter
-              paramDefinition={def}
-              distribution={currentDistribution}
-              updateDistribution={updateDistribution}
-              key={`${currentDistribution.type}:${def.paramProp}`}
-            />))}</div> 
        </CardHeader>
+       <div style={{padding: "1em", paddingTop: "-3em", marginTop: "-3em"}}>
+         {currentDistribution.paramDefinitions.map(def => (
+          <DistributionParameter
+            paramDefinition={def}
+            distribution={currentDistribution}
+            updateDistribution={updateDistribution}
+            key={`${currentDistribution.type}:${def.paramProp}`}
+          />))}
+        </div>
         <CardText expandable={true}>
         <div style={{marginLeft: "-3em", marginTop: "-2.5em"}}>
           <NVD3Chart
@@ -54,7 +57,7 @@ export default class Distributions extends Component {
             showLegend={false}
             interactive={false}
             pointSize={0}
-            interpolate="linear"
+            interpolate={currentDistribution.type === "Uniform" ? "linear" : "basis"}
             height="20em"
             showYAxis={false}
             forceY={[0,1]}
@@ -70,6 +73,9 @@ export default class Distributions extends Component {
         </div>
 
         </CardText>
+        <CardActions>
+            <FlatButton label="Reset" onClick={() => resetDistribution(currentDistribution)} />
+        </CardActions>
       </Card>
     );
   }

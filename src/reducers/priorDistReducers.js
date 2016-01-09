@@ -2,7 +2,7 @@
 import { UPDATE_DISTRIBUTION, RESET_DISTRIBUTION } from '../actions/ActionTypes';
 import { Uniform, LogitNormal, Beta }  from '../types/DistributionDefinitions';
 import Action from '../actions/Action';
-import { propEq, find, assoc, compose, update, remove, last, reduce, head } from 'ramda';
+import { eqProps, find, assoc, compose, update, remove, last, reduce, head } from 'ramda';
 
 const distributions = [
   new Uniform(),
@@ -26,8 +26,8 @@ export default function priorDistReducers(state = initialState, action: Action):
         )(state);
      case RESET_DISTRIBUTION:
        const { distributionToReset } = action;
-       const initalDist = find(propEq('type', distributionToReset), distributions);
-       return assoc(distributionToReset.type, initalDist, state);
+       const initialDist = find(eqProps('type', distributionToReset), distributions);
+       return assoc(distributionToReset.type, initialDist, state);
      default:
        return state;
    }
