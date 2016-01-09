@@ -8,6 +8,7 @@ import NVD3Chart from 'react-nvd3';
 import PassRateGraph from '../components/PassRateGraph';
 import CtrGivenSuccessGraph from '../components/CtrGivenSuccessGraph';
 import CtrGivenFailureGraph from '../components/CtrGivenFailureGraph';
+import FailRatesByStageGraph from '../components/FailRatesByStageGraph';
 
 class GraphContainer extends Component {
   // $FlowIssue
@@ -16,7 +17,7 @@ class GraphContainer extends Component {
   };
 
   render(): any {
-    const { dispatch, ctrGraphData, ctrGivenSuccess, ctrGivenFailure } = this.props;
+    const { dispatch, ctrGraphData, failRatesByStage, ctrGivenSuccess, ctrGivenFailure } = this.props;
     return (
         <div className="pure-g">
           <div className="pure-u-1 pure-u-xl-1-2">
@@ -27,6 +28,9 @@ class GraphContainer extends Component {
           </div>
           <div className="pure-u-1 pure-u-xl-1-2">
             <CtrGivenFailureGraph ctrGivenFailure={ctrGivenFailure} />
+          </div>
+          <div className="pure-u-1 pure-u-xl-1-2">
+            <FailRatesByStageGraph failRatesByStage={failRatesByStage} />
           </div>
         </div>
     );

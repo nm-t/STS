@@ -68,5 +68,8 @@ const runSeqTrial = curry((stages, trueRate) => {
 export const graphDataSelector = createSelector(
   nonCumulativeStagesSelector,
   stages => {
-    return ({ ctrGraphData: (map(runSeqTrial(stages), trueRates)) })}
+    const data =  ({ ctrGraphData: (map(runSeqTrial(stages), trueRates)) });
+    console.log(data);
+    return data;
+  }
 );

@@ -43,7 +43,7 @@ export default class App extends Component {
       <div>
         <AppBar title="Sequential Trial Simulator" />
         <div className="pure-g">
-          <div className="pure-u-1 pure-u-md-1-1 pure-u-lg-2-5 pure-u-xl-1-5">
+          <div className="pure-u-1 pure-u-md-1-2 pure-u-lg-2-5 pure-u-xl-1-5">
             <Provider store={store}>
               <DistributionContainer />
             </Provider>

@@ -27,7 +27,7 @@ export default class Distributions extends Component {
     const distGraphData = [ { values: weights, key: "Weighting", color: "#2196F3" } ];
 
     return (
-      <Card style={{ width: "90%", margin: "1em" }} initiallyExpanded={true}>
+      <Card style={{ margin: "1em" }} initiallyExpanded={true}>
         <Tabs onChange={dist => updateDistribution(dist)}>
           {distributions.map((dist, index) => (
             <Tab label={dist.type} value={dist} key={index}/>
@@ -69,6 +69,7 @@ export default class Distributions extends Component {
               },
               tickValues: [0,0.2,0.4,0.6,0.8,1]
             }}
+            forceX={[0,1]}
           />
         </div>
 

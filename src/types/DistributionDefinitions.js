@@ -37,7 +37,7 @@ export class Uniform extends Distribution {
 
 export class LogitNormal extends Distribution {
   constructor() {
-    super("LogitNormal", [
+    super("Logit-normal", [
       new DistParamDefinition({
         paramProp: 'mu',
         displayName: 'μ',
