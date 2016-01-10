@@ -7,7 +7,7 @@ export default class HowToUseBox extends Component {
     const { open, onRequestClose } = this.props;
   return (<InfoBox title="Instructions" open={open} onRequestClose={onRequestClose}>
     <h3>Number inputs</h3>
-    There are number editors that look like this:
+    This application uses number editors that look like this:
     <p style={{marginBottom: "-1em"}}/>
     <DebouncedNumberEditor
         step={1}

@@ -20,7 +20,7 @@ const HowToUseBox = ({open, onRequestClose}) => (
     of the sequential trial, the medication (or dose) is claimed to be
     acceptably safe and/or efficient. 
     <p/>
-    This website allows the visualisation of the stochastic properties
+    This application allows the visualisation of the stochastic properties
     of an arbitrary sequential study, helping investigators design and
     plan first-in-human trials whilst balancing patient safety and
     overall cost-effectiveness.
