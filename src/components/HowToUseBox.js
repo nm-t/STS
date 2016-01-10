@@ -11,6 +11,7 @@ export default class HowToUseBox extends Component {
     <p style={{marginBottom: "-1em"}}/>
     <DebouncedNumberEditor
         step={1}
+        onValueChange={() => {}}
         value={10}
         style={{fontWeight: 400}}
         min={0}

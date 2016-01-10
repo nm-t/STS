@@ -12,7 +12,7 @@ export const failRateByStageSelector = createSelector(
         transpose,
         map(row => {
           const failRates = [...row.failRateByStage, row.passRate];
-          return map(failRate => ({ failRate: failRate, trueRate: round(row.trueRate) }), failRates);
+          return map(failRate => ({ failRate, trueRate: round(row.trueRate) }), failRates);
         })
       )
       (graphData.ctrGraphData)

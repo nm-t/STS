@@ -27,8 +27,8 @@ export const distributionStateSelector = createSelector(
   distsSelector,
   (distributionNames, currentDistribution, distributions) => {
     return {
-      distributionNames: distributionNames,
-      distributions: distributions,
+      distributionNames,
+      distributions,
       currentDistribution: find(compose(equals(currentDistribution), prop("type")), distributions)
     };
   }

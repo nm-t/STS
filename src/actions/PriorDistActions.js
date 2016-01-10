@@ -7,13 +7,13 @@ import { Distribution } from '../types/Distributions';
 export function updateDistribution(distribution: Distribution): Action {
     return {
       type: UPDATE_DISTRIBUTION,
-      distribution: distribution
+      distribution
     };
 }
 
-export function resetDistribution(distribution: Distribution): Action {
+export function resetDistribution(distributionToReset: Distribution): Action {
     return {
         type: RESET_DISTRIBUTION,
-        distributionToReset: distribution
+        distributionToReset
     };
 }

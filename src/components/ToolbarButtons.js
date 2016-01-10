@@ -12,7 +12,6 @@ export default class ToolbarButtons extends Component {
 
   render(): any {
     const { undoAction, redoAction, undoable, redoable } = this.props;
-    console.log(undoable, redoable);
     return (
       <span>
         <IconButton

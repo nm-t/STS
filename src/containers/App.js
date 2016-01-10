@@ -22,12 +22,6 @@ const finalCreateStore = compose(
 const reducer = combineReducers(reducers);
 const store = finalCreateStore(reducer);
 
-if (module.hot) {
-  module.hot.accept('../reducers', () =>
-      store.replaceReducer(combineReducers(require('../reducers')))
-  );
-}
-
 export default class App extends Component {
   // $FlowIssue
   static childContextTypes = {

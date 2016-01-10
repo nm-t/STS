@@ -20,7 +20,7 @@ export const nonCumulativeStagesSelector = createSelector(
       stage.participants,
       {
         participants: stage.participants - prevParticipants,
-        threshold: stage.threshold 
+        threshold: stage.threshold
       }
     ]),
     0
@@ -44,7 +44,7 @@ const middleConstraints = compose(
 
 const singletonConstraint = compose(
   stage => ({
-    stage: stage,
+    stage,
     minThreshold: 1,
     minParticipants: 1,
     maxThreshold: stage.participants,
@@ -103,7 +103,7 @@ export const constrainedStagesSelector = createSelector(
           [lengthIs(2), xs => [headConstraint(xs), lastConstraint(xs)]],
           [() => true, xs => [headConstraint(xs), ...middleConstraints(xs), lastConstraint(xs)]]
         ])(stages),
-      totalParticipants: totalParticipants,
+      totalParticipants,
       removalAllowed: stages.length > 1
     };
   }

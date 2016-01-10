@@ -12,14 +12,14 @@ export function addStage(): Action {
 export function updateStage(index: number, stage: Stage): Action {
     return {
         type: UPDATE_STAGE,
-        stage: stage,
-        index: index
+        stage,
+        index
     };
 }
 
 export function removeStage(index: number): Action {
     return {
         type: REMOVE_STAGE,
-        index: index
+        index
     };
 }
