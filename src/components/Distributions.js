@@ -2,7 +2,7 @@
 import React, {Component, PropTypes} from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import DistributionParameter from './DistributionParameter';
-import NVD3Chart from 'react-nvd3';
+import DistributionGraph from './DistributionGraph';
 import { prop, find, compose, equals } from 'ramda';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
@@ -51,26 +51,7 @@ export default class Distributions extends Component {
         </div>
         <CardText expandable={true}>
         <div style={{marginLeft: "-3em", marginTop: "-2.5em"}}>
-          <NVD3Chart
-            type="lineChart"
-            datum={distGraphData}
-            showLegend={false}
-            interactive={false}
-            pointSize={0}
-            interpolate={currentDistribution.type === "Uniform" ? "linear" : "basis"}
-            height="20em"
-            showYAxis={false}
-            forceY={[0,1]}
-            xAxis={{
-              axisLabel: "True response probability",
-              tickFormat: x => {
-                if (x === 1) return x;
-                return '≥' + x;
-              },
-              tickValues: [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
-            }}
-            forceX={[0,1]}
-          />
+          <DistributionGraph weights={weights} currentDistribution={currentDistribution} />
         </div>
 
         </CardText>
