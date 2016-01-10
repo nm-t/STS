@@ -5,7 +5,7 @@ import DebouncedNumberEditor from './DebouncedNumberEditor';
 export default class HowToUseBox extends Component {
   render() {
     const { open, onRequestClose } = this.props;
-  return (<InfoBox title="How to use" open={open} onRequestClose={onRequestClose}>
+  return (<InfoBox title="Instructions" open={open} onRequestClose={onRequestClose}>
     <h3>Number inputs</h3>
     There are number editors that look like this:
     <p style={{marginBottom: "-1em"}}/>
