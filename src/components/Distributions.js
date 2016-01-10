@@ -28,7 +28,7 @@ export default class Distributions extends Component {
 
     return (
       <Card style={{ margin: "1em" }} initiallyExpanded={true}>
-        <Tabs onChange={dist => updateDistribution(dist)}>
+        <Tabs value={currentDistribution} onChange={dist => updateDistribution(dist)}>
           {distributions.map((dist, index) => (
             <Tab label={dist.type} value={dist} key={index}/>
           ))}
