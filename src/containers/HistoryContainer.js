@@ -10,9 +10,7 @@ class HistoryContainer extends Component {
   // $FlowIssue
   static propTypes = {
     undoable: PropTypes.bool.isRequired,
-    redoable: PropTypes.bool.isRequired,
-    undoAction: PropTypes.func.isRequired,
-    redoAction: PropTypes.func.isRequired
+    redoable: PropTypes.bool.isRequired
   };
 
   render(): any {

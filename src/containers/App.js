@@ -1,6 +1,7 @@
 /* @flow */
 
 import React, { Component } from 'react';
+import MainMenu from '../components/MainMenu';
 import StageContainer from './StageContainer';
 import GraphContainer from './GraphContainer';
 import DistributionContainer from './DistributionContainer';
@@ -42,12 +43,14 @@ export default class App extends Component {
   render(): any {
     return (
       <div>
-        <AppBar title="Sequential Trial Simulator" 
+        <AppBar title="Sequential Trial Simulator"
+         onLeftIconButtonTouchTap={this.toggleLeftNav}
           iconElementRight={
             <Provider store={store}>
               <HistoryContainer />
             </Provider>
           }
+          iconElementLeft={<MainMenu />}
         />
         <div className="pure-g">
           <div className="pure-u-1 pure-u-md-1-2 pure-u-lg-2-5 pure-u-xl-7-24">
