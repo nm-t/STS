@@ -7,6 +7,7 @@ import Divider from 'material-ui/lib/divider';
 import AboutBox from './AboutBox';
 import ContactBox from './ContactBox';
 import HowToUseBox from './HowToUseBox';
+import { curry } from 'ramda';
 
 export default class MainMenu extends Component {
   constructor(props) {
@@ -19,11 +20,15 @@ export default class MainMenu extends Component {
   }
 
   render(): any {
-    const toggleProp = propName => () => {
+    const setVisibility = curry((propName, visible) => () => {
       let updatedState = {};
-      updatedState[propName] = !this.state[propName]
+      updatedState[propName] = visible;
       this.setState(updatedState);
-    };
+    });
+
+    const setHowToUse = setVisibility("isHowToUseOpen");
+    const setAbout = setVisibility("isAboutOpen");
+    const setContact = setVisibility("isContactOpen");
 
     const { isHowToUseOpen, isAboutOpen, isContactOpen } = this.state;
 
@@ -32,13 +37,13 @@ export default class MainMenu extends Component {
           <IconMenu iconButtonElement={
             <IconButton iconStyle={{color: "white"}} iconClassName="material-icons">menu</IconButton>
           }>
-            <MenuItem primaryText="How to use" leftIcon={<FontIcon className="material-icons">gesture</FontIcon>} onClick={toggleProp("isHowToUseOpen")}/>
-            <MenuItem primaryText="About" leftIcon={<FontIcon className="material-icons">chrome_reader_mode</FontIcon>} onClick={toggleProp("isAboutOpen")}/>
-            <MenuItem primaryText="Contact" leftIcon={<FontIcon className="material-icons">face</FontIcon>} onClick={toggleProp("isContactOpen")}/>
+            <MenuItem primaryText="Instructions" leftIcon={<FontIcon className="material-icons">gesture</FontIcon>} onClick={setHowToUse(true)}/>
+            <MenuItem primaryText="About" leftIcon={<FontIcon className="material-icons">chrome_reader_mode</FontIcon>} onClick={setAbout(true)}/>
+            <MenuItem primaryText="Contact" leftIcon={<FontIcon className="material-icons">face</FontIcon>} onClick={setContact(true)}/>
           </IconMenu>
-          <HowToUseBox open={isHowToUseOpen} onRequestClose={toggleProp("isHowToUseOpen")}/>
-          <AboutBox open={isAboutOpen} onRequestClose={toggleProp("isAboutOpen")}/>
-          <ContactBox open={isContactOpen} onRequestClose={toggleProp("isContactOpen")}/>
+          <HowToUseBox open={isHowToUseOpen} onRequestClose={setHowToUse(false)}/>
+          <AboutBox open={isAboutOpen} onRequestClose={setAbout(false)}/>
+          <ContactBox open={isContactOpen} onRequestClose={setContact(false)}/>
         </div>
     );
   }

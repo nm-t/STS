@@ -20,6 +20,8 @@ export default class InfoBox extends Component {
     return (
       <Dialog
         title={title}
+        autoScrollBodyContent={true}
+        autoDetectWindowHeight={true}
         actions={<FlatButton label="Close" onTouchTap={onRequestClose} />}
         open={open}
         onRequestClose={onRequestClose}
