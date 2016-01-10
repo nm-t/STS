@@ -1,10 +1,10 @@
 /* @flow */
 
 import React, { Component } from 'react';
-import { ActionCreators } from 'redux-undo';
 import StageContainer from './StageContainer';
 import GraphContainer from './GraphContainer';
 import DistributionContainer from './DistributionContainer';
+import HistoryContainer from './HistoryContainer';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -18,11 +18,8 @@ const finalCreateStore = compose(
   applyMiddleware(thunk)
 )(createStore);
 
-console.log(reducers);
-
 const reducer = combineReducers(reducers);
 const store = finalCreateStore(reducer);
-
 
 if (module.hot) {
   module.hot.accept('../reducers', () =>
@@ -31,6 +28,7 @@ if (module.hot) {
 }
 
 export default class App extends Component {
+  // $FlowIssue
   static childContextTypes = {
     muiTheme: React.PropTypes.object,
   };
@@ -44,7 +42,13 @@ export default class App extends Component {
   render(): any {
     return (
       <div>
-        <AppBar title="Sequential Trial Simulator" iconElementRight={<ToolbarButtons undoAction={() => store.dispatch(ActionCreators.undo())} redoAction={() => store.dispatch(ActionCreators.redo())}/>}/>
+        <AppBar title="Sequential Trial Simulator" 
+          iconElementRight={
+            <Provider store={store}>
+              <HistoryContainer />
+            </Provider>
+          }
+        />
         <div className="pure-g">
           <div className="pure-u-1 pure-u-md-1-2 pure-u-lg-2-5 pure-u-xl-7-24">
             <Provider store={store}>
