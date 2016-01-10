@@ -12,10 +12,12 @@ export default class FailRatesByStageGraph extends Component {
   };
 
   toGraphData(stagesData: any): any {
+    const colors = ["#2196F3","#81a4d0","#ff5252","#FF7575","#4f47b4","#918bdf"];
     const stages = stagesData.map(
       (stageData, index) => ({
         key: `Stage ${index + 1}`,
-        values: stageData
+        values: stageData,
+        color: index === stagesData.length - 1 ? "#EDEDED" : colors[index]
       })
     );
     const lastIndex = stages.length - 1;
